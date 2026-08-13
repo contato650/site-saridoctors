@@ -106,6 +106,13 @@ html.js-anim [data-hero] > * { opacity: 0; }
   .rede-rule { transition: none; }
 }
 
+/* ===== As 6 Performances (#pos) =====
+   As 5 colunas ficam fixas no desktop e caem em degraus; o grid-template-columns
+   e inline, entao as regras responsivas precisam de !important. */
+@media (max-width: 1000px) { .perf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+@media (max-width: 700px) { .perf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+@media (max-width: 440px) { .perf-grid { grid-template-columns: 1fr !important; } }
+
 /* Nav: encolhe e escurece depois do hero (classe alternada por JS, transição via CSS) */
 .nav-pill { transition: background .4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow .4s cubic-bezier(0.25,0.46,0.45,0.94), padding .4s cubic-bezier(0.25,0.46,0.45,0.94); }
 .nav-pill > a > img { transition: height .4s cubic-bezier(0.25,0.46,0.45,0.94); }
@@ -379,28 +386,28 @@ html.js-anim [data-hero] > * { opacity: 0; }
           <p style="margin: 0; font-size: 15.5px; line-height: 1.65; color: #5C4F49; text-wrap: pretty;">Propósito, fé e sentido: a dimensão que atravessa as outras cinco. É o que sustenta a adesão do paciente quando o tratamento deixa de ser novidade e vira rotina.</p>
         </div>
         <span style="display: block; height: 1px; margin: 26px 0; background: linear-gradient(90deg, #D9C69A 0%, #E3DACB 55%, rgba(227,218,203,0) 100%);"></span>
-        <div data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 16px;">
-        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 28px 24px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
+        <div class="perf-grid" data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px;">
+        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 26px 20px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: #8A6D1F;">I</span>
           <h4 style="margin: 12px 0 0; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #1C1416;">Performance Mental</h4>
           <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #5C4F49;">Cognição, sono, humor e energia do paciente 40+.</p>
         </div>
-        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 28px 24px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
+        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 26px 20px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: #8A6D1F;">II</span>
           <h4 style="margin: 12px 0 0; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #1C1416;">Performance Física</h4>
           <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #5C4F49;">Massa muscular, sarcopenia, força e capacidade funcional como marcadores de longevidade.</p>
         </div>
-        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 28px 24px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
+        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 26px 20px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: #8A6D1F;">III</span>
           <h4 style="margin: 12px 0 0; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #1C1416;">Performance Sexual</h4>
           <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #5C4F49;">Saúde hormonal e vitalidade de homens e mulheres, a parte mais extensa do currículo junto com a metabólica.</p>
         </div>
-        <div style="background: #14090B; border-radius: 2rem; padding: 28px 24px; box-shadow: 0 24px 50px rgba(20,9,11,0.3); transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px) scale(1.02);">
+        <div style="background: #14090B; border-radius: 2rem; padding: 26px 20px; box-shadow: 0 24px 50px rgba(20,9,11,0.3); transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px) scale(1.02);">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: #C9A84C;">IV</span>
           <h4 style="margin: 12px 0 0; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #FAF8F5;">Performance Metabólica</h4>
           <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: rgba(250,248,245,0.82);">Emagrecimento e obesidade, microbioma, resistência insulínica e bioquímica aplicada. O coração do programa.</p>
         </div>
-        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 28px 24px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
+        <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 26px 20px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: #8A6D1F;">V</span>
           <h4 style="margin: 12px 0 0; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #1C1416;">Performance Defensiva</h4>
           <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #5C4F49;">Imunidade, prevenção e gestão de risco do paciente maduro.</p>
