@@ -134,8 +134,10 @@ html.js-anim [data-hero] > * { opacity: 0; }
 .ciclo-node:hover .ciclo-dot { border-color: #D9BC66; color: #FAF8F5; }
 .ciclo-node.ciclo-on .ciclo-dot { background: #C9A84C; color: #14090B; border-color: #C9A84C; box-shadow: 0 0 0 8px rgba(201,168,76,0.16), 0 0 30px rgba(201,168,76,0.5); }
 .ciclo-node.ciclo-on .ciclo-lbl { color: #FAF8F5; }
-.ciclo-capwrap { margin: 22px auto 0; max-width: 640px; min-height: 96px; }
-@media (max-width: 640px) { .ciclo-capwrap { min-height: 140px; } }
+.ciclo-capwrap { margin: 20px auto 0; max-width: 640px; min-height: 84px; }
+.ciclo-node:focus { outline: none; }
+.ciclo-node:focus-visible .ciclo-dot { box-shadow: 0 0 0 2.5px #FAF8F5, 0 0 0 8px rgba(201,168,76,0.16); }
+@media (max-width: 640px) { .ciclo-capwrap { min-height: 125px; } }
 @media (max-width: 480px) {
   .ciclo-lbl { display: none; }
   .ciclo-dot { width: 32px; height: 32px; font-size: 11px; }
@@ -144,7 +146,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
   .ciclo-hub .ciclo-big { font-size: 30px !important; }
   .ciclo-hub .ciclo-mid { font-size: 12px !important; margin-top: 4px !important; }
   .ciclo-hub .ciclo-small { font-size: 8.5px !important; letter-spacing: 0.04em !important; margin-top: 6px !important; }
-  .ciclo-capwrap { min-height: 165px; }
+  .ciclo-capwrap { min-height: 150px; }
 }
 @media (max-width: 360px) { .ciclo-hub { width: 66%; } }
 @media (prefers-reduced-motion: reduce) {
@@ -482,9 +484,9 @@ html.js-anim [data-hero] > * { opacity: 0; }
           </div>
           <div class="ciclo-capwrap">
             <div class="ciclo-caption" style="text-align: center;">
-              <p style="margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #C9A84C;">{{ cicloAtivo.etiqueta }}</p>
-              <p style="margin: 5px 0 0; font-family: 'Playfair Display', serif; font-size: clamp(17px, 2vw, 20px); font-weight: 600; line-height: 1.2; color: #FAF8F5;">{{ cicloAtivo.nome }}</p>
-              <p style="margin: 7px auto 0; max-width: 560px; font-size: 14px; line-height: 1.55; color: rgba(250,248,245,0.7); text-wrap: pretty;">{{ cicloAtivo.desc }}</p>
+              <p style="margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C9A84C;">{{ cicloAtivo.etiqueta }}</p>
+              <p style="margin: 4px 0 0; font-family: 'Playfair Display', serif; font-size: 15.5px; font-weight: 600; line-height: 1.25; color: #FAF8F5;">{{ cicloAtivo.nome }}</p>
+              <p style="margin: 6px auto 0; max-width: 520px; font-size: 13px; line-height: 1.55; color: rgba(250,248,245,0.68); text-wrap: pretty;">{{ cicloAtivo.desc }}</p>
             </div>
           </div>
         </div>
