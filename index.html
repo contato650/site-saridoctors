@@ -19,6 +19,7 @@
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4/lib/anime.iife.min.js" defer data-anime></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer data-gsap></script>
 </head>
 <body>
 <x-dc>
@@ -113,19 +114,23 @@ html.js-anim [data-hero] > * { opacity: 0; }
 /* ===== Ciclo do currículo (#pos) =====
    Círculo central com os números da pós + 9 partes em órbita, com nó ativo
    avançando sozinho (ver _initCiclo no script). Posições left/top dos nós
-   vêm inline via renderVals; o resto do visual fica aqui. */
+   vêm inline via renderVals. Movimento (entrada, órbita do cometa, spin do
+   anel, pulso do hub) é GSAP; sem GSAP o ciclo fica estático mas visível.
+   Transform dos dots fica com o GSAP — a transition cobre só as cores. */
 .ciclo-stage { position: relative; width: min(600px, 100%); aspect-ratio: 1 / 1; margin: 26px auto 0; }
-.ciclo-ring { position: absolute; left: 50%; top: 50%; width: 82%; height: 82%; border: 1.5px dashed rgba(201,168,76,0.45); border-radius: 50%; transform: translate(-50%, -50%); animation: spinSlow 70s linear infinite; }
+.ciclo-ring { position: absolute; left: 50%; top: 50%; width: 82%; height: 82%; border: 1.5px dashed rgba(201,168,76,0.45); border-radius: 50%; transform: translate(-50%, -50%); }
 .ciclo-ring2 { position: absolute; left: 50%; top: 50%; width: 96%; height: 96%; border: 1px solid rgba(201,168,76,0.12); border-radius: 50%; transform: translate(-50%, -50%); }
 .ciclo-hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 54%; aspect-ratio: 1 / 1; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); background: radial-gradient(circle at 50% 38%, rgba(91,0,0,0.55) 0%, rgba(91,0,0,0.12) 55%, rgba(20,9,11,0) 75%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px; box-sizing: border-box; }
+.ciclo-comet-wrap { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+.ciclo-comet { position: absolute; left: 50%; top: 9%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #F5DFA0; box-shadow: 0 0 6px 2px rgba(245,223,160,0.9), 0 0 18px 6px rgba(201,168,76,0.55), 0 0 40px 14px rgba(201,168,76,0.25); }
 .ciclo-node { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 7px; background: none; border: none; padding: 0; cursor: pointer; z-index: 2; font-family: 'Plus Jakarta Sans', sans-serif; }
-.ciclo-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700; color: #C9A84C; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-sizing: border-box; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94); }
-.ciclo-lbl { font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em; color: rgba(250,248,245,0.6); line-height: 1.2; max-width: 104px; transition: color .35s; }
-.ciclo-node:hover .ciclo-dot { border-color: #D9BC66; color: #FAF8F5; transform: scale(1.06); }
-.ciclo-node.ciclo-on .ciclo-dot { background: #C9A84C; color: #14090B; border-color: #C9A84C; transform: scale(1.16); box-shadow: 0 0 0 8px rgba(201,168,76,0.16), 0 0 30px rgba(201,168,76,0.5); }
+.ciclo-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700; color: #C9A84C; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-sizing: border-box; transition: background .35s cubic-bezier(0.25,0.46,0.45,0.94), border-color .35s cubic-bezier(0.25,0.46,0.45,0.94), color .35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow .35s cubic-bezier(0.25,0.46,0.45,0.94); }
+.ciclo-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: rgba(250,248,245,0.55); line-height: 1.2; max-width: 96px; transition: color .35s; }
+.ciclo-node:hover .ciclo-dot { border-color: #D9BC66; color: #FAF8F5; }
+.ciclo-node.ciclo-on .ciclo-dot { background: #C9A84C; color: #14090B; border-color: #C9A84C; box-shadow: 0 0 0 8px rgba(201,168,76,0.16), 0 0 30px rgba(201,168,76,0.5); }
 .ciclo-node.ciclo-on .ciclo-lbl { color: #FAF8F5; }
-.ciclo-capwrap { margin: 22px auto 0; max-width: 640px; min-height: 82px; }
-@media (max-width: 640px) { .ciclo-capwrap { min-height: 130px; } }
+.ciclo-capwrap { margin: 22px auto 0; max-width: 640px; min-height: 108px; }
+@media (max-width: 640px) { .ciclo-capwrap { min-height: 150px; } }
 @media (max-width: 480px) {
   .ciclo-lbl { display: none; }
   .ciclo-dot { width: 32px; height: 32px; font-size: 11px; }
@@ -134,12 +139,12 @@ html.js-anim [data-hero] > * { opacity: 0; }
   .ciclo-hub .ciclo-big { font-size: 30px !important; }
   .ciclo-hub .ciclo-mid { font-size: 12px !important; margin-top: 4px !important; }
   .ciclo-hub .ciclo-small { font-size: 8.5px !important; letter-spacing: 0.04em !important; margin-top: 6px !important; }
-  .ciclo-capwrap { min-height: 160px; }
+  .ciclo-capwrap { min-height: 175px; }
 }
 @media (max-width: 360px) { .ciclo-hub { width: 66%; } }
 @media (prefers-reduced-motion: reduce) {
-  .ciclo-ring { animation: none; }
-  .ciclo-dot, .ciclo-node:hover .ciclo-dot, .ciclo-node.ciclo-on .ciclo-dot { transition: none; transform: none; }
+  .ciclo-comet-wrap { display: none; }
+  .ciclo-dot { transition: none; }
 }
 
 /* Nav: encolhe e escurece depois do hero (classe alternada por JS, transição via CSS) */
@@ -454,6 +459,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
           <div class="ciclo-stage">
             <span class="ciclo-ring"></span>
             <span class="ciclo-ring2"></span>
+            <span class="ciclo-comet-wrap"><span class="ciclo-comet"></span></span>
             <div class="ciclo-hub">
               <span class="ciclo-tag" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; color: rgba(201,168,76,0.85);">Pós-Graduação</span>
               <span class="ciclo-big" data-countup style="display: block; margin-top: 8px; font-family: 'Playfair Display', serif; font-size: clamp(38px, 6vw, 52px); font-weight: 600; color: #C9A84C; line-height: 1;">20</span>
@@ -469,7 +475,11 @@ html.js-anim [data-hero] > * { opacity: 0; }
             </sc-for>
           </div>
           <div class="ciclo-capwrap">
-            <p class="ciclo-caption" style="margin: 0; font-size: 15.5px; line-height: 1.65; color: rgba(250,248,245,0.85); text-align: center; text-wrap: pretty;"><strong style="color: #C9A84C;">{{ cicloAtivo.titulo }}.</strong> {{ cicloAtivo.desc }}</p>
+            <div class="ciclo-caption" style="text-align: center;">
+              <p style="margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #C9A84C;">{{ cicloAtivo.etiqueta }}</p>
+              <p style="margin: 6px 0 0; font-family: 'Playfair Display', serif; font-size: clamp(19px, 2.4vw, 24px); font-weight: 600; line-height: 1.2; color: #FAF8F5;">{{ cicloAtivo.nome }}</p>
+              <p style="margin: 8px auto 0; max-width: 600px; font-size: 14.5px; line-height: 1.6; color: rgba(250,248,245,0.72); text-wrap: pretty;">{{ cicloAtivo.desc }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -809,6 +819,7 @@ const ANIM_TOKENS = {
 };
 
 const ANIM_SRC = 'https://cdn.jsdelivr.net/npm/animejs@4/lib/anime.iife.min.js';
+const GSAP_SRC = 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js';
 
 /* PRESETS nomeados — todos consomem ANIM_TOKENS. */
 function createAnimPresets(anime) {
@@ -1045,13 +1056,23 @@ class Component extends DCLogic {
       Array.from(el.children).forEach((c) => { c.style.opacity = 1; });
     }
   }
-  /* ---- Ciclo do currículo: nó ativo avança sozinho enquanto visível ---- */
+  /* ---- Ciclo do currículo: nó ativo avança sozinho enquanto visível.
+     Movimento via GSAP (entrada coreografada, cometa em órbita, spin do anel,
+     pulso do hub); sem GSAP o ciclo fica estático e o texto troca sem animar. ---- */
   _initCiclo() {
     if (!('IntersectionObserver' in window)) return;
     const stage = document.querySelector('.ciclo-stage');
     if (!stage) return;
     this._cicloHold = 0;
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      this._loadGsap((gsap) => {
+        if (!gsap) return;
+        this._gsap = gsap;
+        this._cicloPrep(stage);
+        if (this._cicloSeen) this._cicloIntro(stage);
+      });
+    }
     const start = () => {
       if (this._cicloTimer || reduce) return;
       this._cicloTimer = setInterval(() => {
@@ -1062,20 +1083,82 @@ class Component extends DCLogic {
     const stop = () => { if (this._cicloTimer) { clearInterval(this._cicloTimer); this._cicloTimer = 0; } };
     // entries pode agrupar entrada+saida num so lote; o ultimo registro e o atual.
     this._cicloObs = new IntersectionObserver((entries) => {
-      entries[entries.length - 1].isIntersecting ? start() : stop();
+      const on = entries[entries.length - 1].isIntersecting;
+      if (on) {
+        this._cicloSeen = true;
+        if (this._gsap) this._cicloIntro(stage);
+        start();
+      } else {
+        stop();
+      }
     }, { threshold: 0.3 });
     this._cicloObs.observe(stage);
   }
+  _loadGsap(cb) {
+    if (window.gsap) { cb(window.gsap); return; }
+    let s = document.querySelector('script[data-gsap]');
+    if (!s) {
+      s = document.createElement('script');
+      s.src = GSAP_SRC;
+      s.async = true;
+      s.setAttribute('data-gsap', '');
+      document.head.appendChild(s);
+    }
+    s.addEventListener('load', () => cb(window.gsap || null));
+    s.addEventListener('error', () => cb(null));
+  }
+  /* Estado inicial (escondido) + transforms persistentes. O translate(-50%,-50%)
+     do CSS vira xPercent/yPercent para o GSAP poder compor scale/rotation. */
+  _cicloPrep(stage) {
+    const g = this._gsap;
+    if (this._cicloIntroDone) return;
+    this._cicloCtx = g.context(() => {
+      g.set(stage.querySelectorAll('.ciclo-node'), { xPercent: -50, yPercent: -50, opacity: 0, scale: 0 });
+      g.set(stage.querySelector('.ciclo-hub'), { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.7 });
+      g.set(stage.querySelectorAll('.ciclo-ring, .ciclo-ring2'), { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.72 });
+    }, stage);
+  }
+  _cicloIntro(stage) {
+    const g = this._gsap;
+    if (!g || this._cicloIntroDone) return;
+    this._cicloIntroDone = true;
+    this._cicloCtx && this._cicloCtx.add(() => {
+      const tl = g.timeline({ defaults: { ease: 'power3.out' } });
+      tl.to(stage.querySelector('.ciclo-ring2'), { opacity: 1, scale: 1, duration: 0.9 })
+        .to(stage.querySelector('.ciclo-ring'), { opacity: 1, scale: 1, duration: 0.9 }, '-=0.72')
+        .to(stage.querySelector('.ciclo-hub'), { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.6)' }, '-=0.62')
+        .to(stage.querySelectorAll('.ciclo-node'), { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(2)', stagger: 0.07 }, '-=0.45')
+        .to(stage.querySelector('.ciclo-comet-wrap'), { opacity: 1, duration: 0.6 }, '-=0.25');
+      // movimentos continuos
+      g.to(stage.querySelector('.ciclo-ring'), { rotation: 360, duration: 80, repeat: -1, ease: 'none' });
+      g.to(stage.querySelector('.ciclo-comet-wrap'), { rotation: 360, duration: 22, repeat: -1, ease: 'none' });
+      g.to(stage.querySelector('.ciclo-hub'), { scale: 1.02, duration: 3.4, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    });
+  }
   _setCiclo(i) {
     this.setState({ cicloAtivo: i }, () => {
+      const g = this._gsap;
       const cap = document.querySelector('.ciclo-caption');
-      if (cap && this._anime) {
-        // Fora do scope de proposito: animacao recorrente registrada no scope
-        // acumularia um objeto por tick ate o unmount. Cancela a anterior.
-        if (this._capAnim) { try { this._capAnim.cancel(); } catch (e) {} }
-        this._capAnim = this._anime.animate(cap, {
-          opacity: [0, 1], translateY: [10, 0], duration: 450, ease: 'outExpo'
-        });
+      if (cap) {
+        if (g) {
+          // Tweens soltos (fora de scope/context): o GSAP libera ao concluir.
+          g.killTweensOf(cap);
+          g.fromTo(cap, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' });
+        } else if (this._anime) {
+          if (this._capAnim) { try { this._capAnim.cancel(); } catch (e) {} }
+          this._capAnim = this._anime.animate(cap, {
+            opacity: [0, 1], translateY: [10, 0], duration: 450, ease: 'outExpo'
+          });
+        }
+      }
+      if (g && this._cicloIntroDone) {
+        const dots = document.querySelectorAll('.ciclo-node .ciclo-dot');
+        const on = document.querySelector('.ciclo-node.ciclo-on .ciclo-dot');
+        if (on) {
+          g.killTweensOf(dots);
+          g.set(dots, { scale: 1 });
+          g.fromTo(on, { scale: 0.55 }, { scale: 1.16, duration: 0.7, ease: 'back.out(2.4)' });
+        }
       }
     });
   }
@@ -1154,6 +1237,15 @@ class Component extends DCLogic {
     if (this._cicloObs) this._cicloObs.disconnect();
     if (this._cicloTimer) { clearInterval(this._cicloTimer); this._cicloTimer = 0; }
     if (this._capAnim) { try { this._capAnim.cancel(); } catch (e) {} this._capAnim = null; }
+    if (this._gsap) {
+      try {
+        this._gsap.killTweensOf('.ciclo-caption');
+        this._gsap.killTweensOf('.ciclo-node .ciclo-dot');
+      } catch (e) {}
+    }
+    if (this._cicloCtx) { try { this._cicloCtx.revert(); } catch (e) {} this._cicloCtx = null; }
+    this._cicloIntroDone = false;
+    this._cicloSeen = false;
     if (this._dustResize) { window.removeEventListener('resize', this._dustResize); this._dustResize = null; }
     if (this._dustObs) this._dustObs.disconnect();
     if (this._dustRaf) { cancelAnimationFrame(this._dustRaf); this._dustRaf = 0; }
@@ -1196,15 +1288,15 @@ class Component extends DCLogic {
     ];
     /* Conteúdo real do cronograma da pós (PDF "CRONOGRAMA PÓS 2026/2027"). */
     const CICLO_PARTES = [
-      { curto: 'Base', titulo: 'Parte 1 · Conceitos Básicos · Módulos 1 e 2', desc: 'Introdução à Medicina da Longevidade de Performance, o tripé da segurança médica, biologia do envelhecimento, biomarcadores e como iniciar um consultório de longevidade.' },
-      { curto: 'Mental', titulo: 'Parte 2 · Performance Mental · Módulo 3', desc: 'Saúde mental e longevidade: ansiedade, depressão, memória e cognição, farmacologia e medicina neurocomportamental.' },
-      { curto: 'Física', titulo: 'Parte 3 · Performance Física · Módulos 4 a 6', desc: 'Exercício como intervenção médica, saúde cardiovascular e sono e ciclos circadianos na longevidade.' },
-      { curto: 'Sexual', titulo: 'Parte 4 · Performance Sexual · Módulos 7 a 10', desc: 'Saúde hormonal da mulher e do homem: menopausa, terapia hormonal, reposição de testosterona e sarcopenia.' },
-      { curto: 'Metabólica', titulo: 'Parte 5 · Performance Metabólica · Módulos 11 a 16', desc: 'Emagrecimento e obesidade (com aula presencial), nutrologia, saúde intestinal e doenças endócrinas do adulto. O coração do programa.' },
-      { curto: 'Defensiva', titulo: 'Parte 6 · Performance Defensiva · Módulos 17 e 18', desc: 'Inflamação e longevidade, doenças autoimunes e medicina regenerativa: células-tronco, PRP e terapias teciduais.' },
-      { curto: 'Marketing', titulo: 'Parte 7 · Posicionamento e Marketing Médico · Módulo 19', desc: 'Posicionamento, presença digital, autoridade médica e a trajetória do lead à venda.' },
-      { curto: 'TCC', titulo: 'Parte 8 · Trabalho de Conclusão de Curso · Módulo 20', desc: 'Pesquisa científica, normas ABNT, metodologia e redação, com estratégias para levar o TCC a um mestrado.' },
-      { curto: 'Extra', titulo: 'Módulo Extra · Imersão em Hormônios Femininos', desc: 'Bônus com a Dra. Sarina: endocrinologia feminina, implantes hormonais na prática e neurocomportamento aplicado à adesão.' }
+      { curto: 'Base', etiqueta: 'Parte 1 · Módulos 1 e 2', nome: 'Conceitos Básicos', desc: 'Introdução à Medicina da Longevidade de Performance, o tripé da segurança médica, biologia do envelhecimento, biomarcadores e como iniciar um consultório de longevidade.' },
+      { curto: 'Mental', etiqueta: 'Parte 2 · Módulo 3', nome: 'Performance Mental', desc: 'Saúde mental e longevidade: ansiedade, depressão, memória e cognição, farmacologia e medicina neurocomportamental.' },
+      { curto: 'Física', etiqueta: 'Parte 3 · Módulos 4 a 6', nome: 'Performance Física', desc: 'Exercício como intervenção médica, saúde cardiovascular e sono e ciclos circadianos na longevidade.' },
+      { curto: 'Sexual', etiqueta: 'Parte 4 · Módulos 7 a 10', nome: 'Performance Sexual', desc: 'Saúde hormonal da mulher e do homem: menopausa, terapia hormonal, reposição de testosterona e sarcopenia.' },
+      { curto: 'Metabólica', etiqueta: 'Parte 5 · Módulos 11 a 16', nome: 'Performance Metabólica', desc: 'Emagrecimento e obesidade (com aula presencial), nutrologia, saúde intestinal e doenças endócrinas do adulto. O coração do programa.' },
+      { curto: 'Defensiva', etiqueta: 'Parte 6 · Módulos 17 e 18', nome: 'Performance Defensiva', desc: 'Inflamação e longevidade, doenças autoimunes e medicina regenerativa: células-tronco, PRP e terapias teciduais.' },
+      { curto: 'Marketing', etiqueta: 'Parte 7 · Módulo 19', nome: 'Posicionamento e Marketing Médico', desc: 'Posicionamento, presença digital, autoridade médica e a trajetória do lead à venda.' },
+      { curto: 'TCC', etiqueta: 'Parte 8 · Módulo 20', nome: 'Trabalho de Conclusão de Curso', desc: 'Pesquisa científica, normas ABNT, metodologia e redação, com estratégias para levar o TCC a um mestrado.' },
+      { curto: 'Extra', etiqueta: 'Módulo Extra · Bônus', nome: 'Imersão em Hormônios Femininos', desc: 'Bônus com a Dra. Sarina: endocrinologia feminina, implantes hormonais na prática e neurocomportamento aplicado à adesão.' }
     ];
     const atv = this.state.cicloAtivo || 0;
     const ciclo = CICLO_PARTES.map((c, i) => {
@@ -1214,7 +1306,7 @@ class Component extends DCLogic {
         n: ('0' + (i + 1)).slice(-2),
         pos: 'left: ' + (50 + 41 * Math.cos(ang)).toFixed(2) + '%; top: ' + (50 + 41 * Math.sin(ang)).toFixed(2) + '%;',
         cls: 'ciclo-node' + (i === atv ? ' ciclo-on' : ''),
-        rotulo: c.titulo,
+        rotulo: c.etiqueta + ': ' + c.nome,
         pick: () => { this._cicloHold = Date.now() + 9000; this._setCiclo(i); }
       };
     });
