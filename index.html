@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>x-dc{display:none}</style>
+<noscript><style>x-dc{display:block}</style></noscript>
 <script src="./support.js"></script>
 <script>
 /* Sem flash de conteudo: js-anim esconde os blocos animaveis via CSS.
@@ -93,8 +95,10 @@ html.js-anim [data-hero] > * { opacity: 0; }
 .rede-card:hover { transform: translateY(-6px) !important; background: rgba(250,248,245,0.08) !important; }
 .rede-ig:hover { border-color: rgba(221,42,123,0.85) !important; box-shadow: 0 26px 60px rgba(221,42,123,0.28) !important; }
 .rede-yt:hover { border-color: rgba(255,0,0,0.75) !important; box-shadow: 0 26px 60px rgba(255,0,0,0.2) !important; }
+.rede-tt:hover { border-color: rgba(37,244,238,0.7) !important; box-shadow: 0 26px 60px rgba(37,244,238,0.16) !important; }
 .rede-ig:hover .rede-cta { transform: scale(1.03); box-shadow: 0 12px 30px rgba(221,42,123,0.4); }
 .rede-yt:hover .rede-cta { transform: scale(1.03); box-shadow: 0 12px 30px rgba(255,0,0,0.35); }
+.rede-tt:hover .rede-cta { transform: scale(1.03); box-shadow: 0 12px 30px rgba(254,44,85,0.4); }
 .rede-cta { transition: transform .3s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow .3s cubic-bezier(0.25,0.46,0.45,0.94); }
 .rede-rule { transition: width .35s cubic-bezier(0.25,0.46,0.45,0.94), background .35s; }
 .rede-card:hover .rede-rule { width: 64px !important; background: #D9BC66 !important; }
@@ -240,9 +244,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">Cremesp 278161</span>
         <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">RQE 35867</span>
         <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">RQE 14962</span>
-        <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">Mestre em Direito</span>
-        <span style="padding: 6px 15px; border: 1px solid rgba(201,168,76,0.5); border-radius: 999px; font-size: 12px; font-weight: 700; color: #C9A84C; background: rgba(201,168,76,0.1);">Método validado pela The Lancet 2025</span>
-      </div>
+        <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">Mestre em Direito</span>      </div>
     </div>
   </div>
 </section>
@@ -253,7 +255,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
   <div style="max-width: 1080px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2;">
     <p data-reveal="fadeUp" style="margin: 0 0 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C;">/ A médica mentora</p>
     <h2 data-reveal="fadeUp" data-reveal-delay="80" style="margin: 0; font-size: clamp(32px, 5vw, 54px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: #FAF8F5; max-width: 760px;">Por que aprender com a <em style="font-family: 'Playfair Display', serif; font-weight: 500; color: #C9A84C;">Dra. Sarina</em></h2>
-    <p data-reveal="fadeUp" data-reveal-delay="160" style="margin: 24px 0 0; max-width: 700px; font-size: 17.5px; line-height: 1.75; color: rgba(250,248,245,0.82); text-wrap: pretty;">Médica há 31 anos, bacharel e mestre em Direito. Pioneira no estudo do cortisol no Brasil, criadora do conceito de &ldquo;Cura da Obesidade&rdquo; e do método Neuro-obesogênese, validado pela The Lancet 2025. Aos 35 anos entrou na menopausa, eliminou 20kg e se mantém há mais de 12 anos, sem rebote. O que ensina e clinica, viveu primeiro.</p>
+    <p data-reveal="fadeUp" data-reveal-delay="160" style="margin: 24px 0 0; max-width: 700px; font-size: 17.5px; line-height: 1.75; color: rgba(250,248,245,0.82); text-wrap: pretty;">Médica há 31 anos, bacharel e mestre em Direito. Pioneira no estudo do cortisol no Brasil, criadora do conceito de &ldquo;Cura da Obesidade&rdquo; e do método Neuro-obesogênese. Aos 35 anos entrou na menopausa, eliminou 20kg e se mantém há mais de 12 anos, sem rebote. O que ensina e clinica, viveu primeiro.</p>
     <div data-reveal="fadeUp" data-stagger style="margin-top: 52px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
       <div style="border: 1px solid rgba(201,168,76,0.35); border-radius: 2rem; padding: 26px 24px;">
         <span data-countup style="display: block; font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 600; color: #C9A84C; line-height: 1;">15</span>
@@ -552,7 +554,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 44px; align-items: center;">
           <div>
             <h2 style="margin: 0; font-size: clamp(32px, 5vw, 54px); font-weight: 800; line-height: 1.04; letter-spacing: -0.02em; color: #2A1B12; max-width: 780px;">Método Sari. A diferença entre emagrecer e <em style="font-family: 'Playfair Display', serif; font-weight: 500; color: #7A3B1E;">se &ldquo;curar&rdquo;</em>.</h2>
-            <p style="margin: 24px 0 0; max-width: 680px; font-size: 17.5px; line-height: 1.7; color: #57493C; text-wrap: pretty;">O mais completo tratamento de emagrecimento personalizado. Criado pela Dra. Sarina Occhipinti. Mais de 9 mil mulheres emagreceram de forma definitiva, em 15 países. 100% online, um ano de acompanhamento.</p>
+            <p style="margin: 24px 0 0; max-width: 680px; font-size: 17.5px; line-height: 1.7; color: #57493C; text-wrap: pretty;">O mais completo tratamento de emagrecimento personalizado. Criado pela Dra. Sarina Occhipinti. Mais de 10.000 pacientes tratados, em 15 países. 100% online, um ano de acompanhamento.</p>
           </div>
           <div style="aspect-ratio: 4 / 5; max-width: 400px; width: 100%; border-radius: 2.5rem; overflow: hidden; justify-self: end;">
             <img src="uploads/IMERSAO%20SARI%20DOCTORS%20(%2030-08%20)_-87.jpg" alt="Dra. Sarina Occhipinti palestrando" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: block;">
@@ -620,9 +622,9 @@ html.js-anim [data-hero] > * { opacity: 0; }
     <img data-reveal="fadeIn" src="uploads/IMERSAO%20SARI%20DOCTORS%20(%2029-08%20)%20-76.jpg" alt="Dra. Sarina com a turma da imersão" style="margin-top: 36px; width: 100%; height: 380px; object-fit: cover; object-position: 50% 0%; border-radius: 2.5rem; display: block;">
     <div data-reveal="fadeUp" data-stagger style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; align-items: stretch;">
       <div style="background: rgba(250,248,245,0.04); border: 1px solid rgba(201,168,76,0.4); border-radius: 2.5rem; padding: 34px 32px; display: flex; flex-direction: column; gap: 12px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); background: rgba(250,248,245,0.07);">
-        <span style="align-self: flex-start; padding: 6px 16px; background: #C9A84C; color: #14090B; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600;">23 a 25 de setembro de 2026</span>
+        <span style="align-self: flex-start; padding: 6px 16px; background: #C9A84C; color: #14090B; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600;">24 a 26 de setembro de 2026</span>
         <h3 style="margin: 0; font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 600; color: #FAF8F5;">Imersão em Obesidade</h3>
-        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(250,248,245,0.7); flex: 1;">O método Neuro-obesogênese, validado pela The Lancet 2025: neurocomportamento, hormônios e metabolismo em 3 dias de prática. 36 horas presenciais, 3 certificados, apostila, templates de anamnese e precificação, contratos prontos e 3 mentorias online de implementação.</p>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(250,248,245,0.7); flex: 1;">O método Neuro-obesogênese: neurocomportamento, hormônios e metabolismo em 3 dias de prática. 36 horas presenciais, 3 certificados, apostila, templates de anamnese e precificação, contratos prontos e 3 mentorias online de implementação.</p>
         <div><a href="https://wa.me/5531953475912?text=Ol%C3%A1!%20Quero%20garantir%20minha%20vaga%20na%20Imers%C3%A3o%20em%20Obesidade%20de%20setembro." target="_blank" rel="noopener" style="display: inline-block; padding: 12px 26px; background: #C9A84C; color: #14090B; font-size: 14.5px; font-weight: 700; border-radius: 999px; transition: all .3s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: scale(1.03) translateY(-1px); background: #D9BC66; color: #14090B;">Garantir vaga</a></div>
       </div>
       <div style="background: rgba(250,248,245,0.04); border: 1px solid rgba(250,248,245,0.14); border-radius: 2.5rem; padding: 34px 32px; display: flex; flex-direction: column; gap: 12px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); background: rgba(250,248,245,0.07);">
@@ -652,9 +654,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">Cremesp 278161</span>
         <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">RQE 35867</span>
         <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">RQE 14962</span>
-        <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">Mestre em Direito</span>
-        <span style="padding: 6px 15px; border: 1px solid rgba(201,168,76,0.5); border-radius: 999px; font-size: 12px; font-weight: 700; color: #C9A84C; background: rgba(201,168,76,0.1);">Método validado pela The Lancet 2025</span>
-      </div>
+        <span style="padding: 6px 15px; border: 1px solid rgba(250,248,245,0.25); border-radius: 999px; font-size: 12px; font-weight: 600; color: rgba(250,248,245,0.75); background: transparent;">Mestre em Direito</span>      </div>
       <div style="margin-top: 28px;">
         <a href="https://wa.me/5531953475912?text=Ol%C3%A1!%20Quero%20conhecer%20a%20trajet%C3%B3ria%20completa%20da%20Dra.%20Sarina." target="_blank" rel="noopener" style="font-size: 15px; font-weight: 700; color: #C9A84C; border-bottom: 1.5px solid rgba(201,168,76,0.5); padding-bottom: 3px; transition: all .3s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-1px); color: #D9BC66;">Conhecer a trajetória completa</a>
       </div>
@@ -721,6 +721,28 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <span style="position: relative; font-size: 15px; line-height: 1.6; color: rgba(250,248,245,0.72); flex: 1;">Aulas completas e gratuitas sobre mente e metabolismo, performance física, mental e sexual — para quem quer entender a fundo.</span>
         <span class="rede-cta" style="position: relative; display: inline-flex; align-items: center; gap: 9px; align-self: flex-start; padding: 13px 26px; border-radius: 999px; background: linear-gradient(135deg, #E60000 0%, #C00000 100%); color: #FFFFFF; font-size: 14.5px; font-weight: 700;">Inscrever-se no canal <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
       </a>
+
+      <a href="https://www.tiktok.com/@dra.sarina" target="_blank" rel="noopener" class="rede-card rede-tt" style="position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; padding: 36px 34px; border-radius: 2.5rem; background: rgba(250,248,245,0.04); border: 1px solid rgba(37,244,238,0.35); color: #FAF8F5; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);">
+        <span class="rede-glow" style="position: absolute; right: -30%; top: -60%; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(37,244,238,0.22) 0%, rgba(254,44,85,0.16) 45%, transparent 70%); pointer-events: none;"></span>
+        <span style="position: relative; display: flex; align-items: center; gap: 14px;">
+          <span style="width: 54px; height: 54px; flex-shrink: 0; border-radius: 18px; background: #010101; border: 1px solid rgba(250,248,245,0.2); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 26px rgba(37,244,238,0.2);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+          </span>
+          <span>
+            <span style="display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,248,245,0.55);">TikTok</span>
+            <span style="display: block; margin-top: 4px; font-size: 21px; font-weight: 800; letter-spacing: -0.01em; color: #FAF8F5;">@dra.sarina</span>
+          </span>
+        </span>
+        <span style="position: relative; display: block;">
+          <span style="display: flex; align-items: center; gap: 12px; margin-bottom: 13px;">
+            <span class="rede-rule" style="display: block; width: 34px; height: 1.5px; flex-shrink: 0; border-radius: 2px; background: #C9A84C;"></span>
+            <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C;">Para ir direto ao ponto</span>
+          </span>
+          <span style="display: block; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; font-size: clamp(21px, 2.8vw, 26px); line-height: 1.32; color: #F2E9E4; text-wrap: pretty;">A raiz do problema, <span style="color: #C9A84C;">em um minuto</span>.</span>
+        </span>
+        <span style="position: relative; font-size: 15px; line-height: 1.6; color: rgba(250,248,245,0.72); flex: 1;">Respostas rápidas sobre obesidade, hormônios e emagrecimento — o essencial do que a Dra. Sarina ensina, em vídeos curtos.</span>
+        <span class="rede-cta" style="position: relative; display: inline-flex; align-items: center; gap: 9px; align-self: flex-start; padding: 13px 26px; border-radius: 999px; background: linear-gradient(135deg, #FE2C55 0%, #D6224A 100%); color: #FFFFFF; font-size: 14.5px; font-weight: 700;">Seguir no TikTok <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+      </a>
     </div>
 
     <div data-reveal="fadeUp" style="margin-top: 64px; display: flex; align-items: center; gap: 18px;">
@@ -779,9 +801,9 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <p style="margin: 0 0 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #C9A84C;">Institucional</p>
         <div style="display: flex; flex-direction: column; gap: 9px; font-size: 14px;">
           <a href="#sobre" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Sobre</a>
-          <a href="#contato" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Imprensa</a>
-          <a href="#contato" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Contato</a>
-          <a href="#contato" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Políticas</a>
+          <a href="mailto:imprensa@drasarina.com.br" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Imprensa</a>
+          <a href="https://wa.me/5531953475912?text=Ol%C3%A1!%20Vim%20do%20site%20da%20Dra.%20Sarina%20e%20quero%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Contato</a>
+          <a href="/politica-de-privacidade/" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Política de Privacidade</a>
         </div>
       </div>
       <div>
@@ -789,6 +811,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <div style="display: flex; flex-direction: column; gap: 9px; font-size: 14px;">
           <a href="https://www.instagram.com/dra.sarina/" target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Instagram @dra.sarina</a>
           <a href="https://www.youtube.com/channel/UCfaJPRFDE1_Rn268Toi2_gQ" target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">YouTube Dra. Sarina</a>
+          <a href="https://www.tiktok.com/@dra.sarina" target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">TikTok @dra.sarina</a>
           <a href="https://institutosari.com/" target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Instituto Sari</a>
           <a href="https://saridoctors.com.br/" target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">saridoctors.com.br</a>
           <a href="https://www.amazon.com.br/S-Code-longevidade-Dra-Sarina-Occhipinti-ebook/dp/B0B39H38WQ/" target="_blank" rel="noopener" style="color: #B9A9A3; transition: color .3s;" style-hover="color: #FAF8F5;">Livro S.CODE</a>
@@ -797,10 +820,6 @@ html.js-anim [data-hero] > * { opacity: 0; }
     </div>
     <div data-reveal="fadeIn" style="margin-top: 52px; padding-top: 26px; border-top: 1px solid rgba(250,248,245,0.12); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
       <p style="margin: 0; font-size: 12px; color: #7E6E68;">Este site tem caráter informativo e não substitui consulta médica.</p>
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="width: 8px; height: 8px; border-radius: 50%; background: #4CAF7A; display: inline-block; animation: pulseDot 2s ease-in-out infinite;"></span>
-        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; color: #7E6E68;">Sistema Operacional</span>
-      </div>
     </div>
   </div>
 </footer>
