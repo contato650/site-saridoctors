@@ -68,10 +68,7 @@ a:hover { color: #A07C24; }
   .book-card img { justify-self: center; }
   .book-card > div { min-width: 0 !important; }
   .intro-line { font-size: clamp(22px, 6.4vw, 48px) !important; }
-  .curric-panel { padding: 32px 22px !important; }
-  .stats-3 { gap: 10px !important; }
-  .stats-3 > div { padding: 18px 8px !important; }
-  .stats-3 > div > span:first-child { font-size: 32px !important; }
+  .ciclo-panel { padding: 34px 16px 28px !important; border-radius: 2rem !important; }
   .perf-panel { padding: 26px 18px 20px !important; border-radius: 2rem !important; }
   .rede-card { padding: 30px 24px !important; border-radius: 2rem !important; }
   .rede-card .rede-glow { display: none; }
@@ -112,6 +109,38 @@ html.js-anim [data-hero] > * { opacity: 0; }
 @media (max-width: 1000px) { .perf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
 @media (max-width: 700px) { .perf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
 @media (max-width: 440px) { .perf-grid { grid-template-columns: 1fr !important; } }
+
+/* ===== Ciclo do currículo (#pos) =====
+   Círculo central com os números da pós + 9 partes em órbita, com nó ativo
+   avançando sozinho (ver _initCiclo no script). Posições left/top dos nós
+   vêm inline via renderVals; o resto do visual fica aqui. */
+.ciclo-stage { position: relative; width: min(600px, 100%); aspect-ratio: 1 / 1; margin: 26px auto 0; }
+.ciclo-ring { position: absolute; left: 50%; top: 50%; width: 82%; height: 82%; border: 1.5px dashed rgba(201,168,76,0.45); border-radius: 50%; transform: translate(-50%, -50%); animation: spinSlow 70s linear infinite; }
+.ciclo-ring2 { position: absolute; left: 50%; top: 50%; width: 96%; height: 96%; border: 1px solid rgba(201,168,76,0.12); border-radius: 50%; transform: translate(-50%, -50%); }
+.ciclo-hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 54%; aspect-ratio: 1 / 1; border-radius: 50%; border: 1px solid rgba(201,168,76,0.5); background: radial-gradient(circle at 50% 38%, rgba(91,0,0,0.55) 0%, rgba(91,0,0,0.12) 55%, rgba(20,9,11,0) 75%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px; box-sizing: border-box; }
+.ciclo-node { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 7px; background: none; border: none; padding: 0; cursor: pointer; z-index: 2; font-family: 'Plus Jakarta Sans', sans-serif; }
+.ciclo-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700; color: #C9A84C; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-sizing: border-box; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94); }
+.ciclo-lbl { font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em; color: rgba(250,248,245,0.6); line-height: 1.2; max-width: 104px; transition: color .35s; }
+.ciclo-node:hover .ciclo-dot { border-color: #D9BC66; color: #FAF8F5; transform: scale(1.06); }
+.ciclo-node.ciclo-on .ciclo-dot { background: #C9A84C; color: #14090B; border-color: #C9A84C; transform: scale(1.16); box-shadow: 0 0 0 8px rgba(201,168,76,0.16), 0 0 30px rgba(201,168,76,0.5); }
+.ciclo-node.ciclo-on .ciclo-lbl { color: #FAF8F5; }
+.ciclo-capwrap { margin: 22px auto 0; max-width: 640px; min-height: 82px; }
+@media (max-width: 640px) { .ciclo-capwrap { min-height: 130px; } }
+@media (max-width: 480px) {
+  .ciclo-lbl { display: none; }
+  .ciclo-dot { width: 32px; height: 32px; font-size: 11px; }
+  .ciclo-hub { width: 60%; }
+  .ciclo-hub .ciclo-tag { font-size: 8.5px !important; letter-spacing: 0.14em !important; }
+  .ciclo-hub .ciclo-big { font-size: 30px !important; }
+  .ciclo-hub .ciclo-mid { font-size: 12px !important; margin-top: 4px !important; }
+  .ciclo-hub .ciclo-small { font-size: 8.5px !important; letter-spacing: 0.04em !important; margin-top: 6px !important; }
+  .ciclo-capwrap { min-height: 160px; }
+}
+@media (max-width: 360px) { .ciclo-hub { width: 66%; } }
+@media (prefers-reduced-motion: reduce) {
+  .ciclo-ring { animation: none; }
+  .ciclo-dot, .ciclo-node:hover .ciclo-dot, .ciclo-node.ciclo-on .ciclo-dot { transition: none; transform: none; }
+}
 
 /* Nav: encolhe e escurece depois do hero (classe alternada por JS, transição via CSS) */
 .nav-pill { transition: background .4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow .4s cubic-bezier(0.25,0.46,0.45,0.94), padding .4s cubic-bezier(0.25,0.46,0.45,0.94); }
@@ -417,26 +446,30 @@ html.js-anim [data-hero] > * { opacity: 0; }
 
     <div style="margin-top: 68px;">
       <p data-reveal="fadeUp" style="margin: 0 0 20px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6D1F;">/ O currículo por dentro</p>
-      <div class="curric-panel" data-reveal="fadeUp" style="background: #14090B; border-radius: 2.5rem; padding: 44px 40px; color: #FAF8F5; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; align-items: center;">
-        <div class="stats-3" data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
-          <div style="text-align: center; border: 1px solid rgba(201,168,76,0.35); border-radius: 1.6rem; padding: 24px 12px;">
-            <span data-countup style="display: block; font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; color: #C9A84C; line-height: 1;">9</span>
-            <span style="display: block; margin-top: 8px; font-size: 13px; color: rgba(250,248,245,0.65);">partes</span>
+      <div class="ciclo-panel" data-reveal="fadeUp" style="background: #14090B; border-radius: 2.5rem; padding: 46px 28px 38px; color: #FAF8F5; position: relative; overflow: hidden;">
+        <div style="position: absolute; left: 50%; top: -20%; width: 70%; aspect-ratio: 1 / 1; transform: translateX(-50%); background: radial-gradient(circle, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0) 65%); pointer-events: none;"></div>
+        <div style="position: relative; z-index: 1;">
+          <h3 style="margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(22px, 3vw, 30px); font-weight: 500; color: #FAF8F5; text-align: center;">O ciclo da formação</h3>
+          <p style="margin: 10px 0 0; font-size: 14.5px; color: rgba(250,248,245,0.55); text-align: center;">Da base ao TCC, mais o módulo extra de Hormônios Femininos. Toque em uma parte para explorar.</p>
+          <div class="ciclo-stage">
+            <span class="ciclo-ring"></span>
+            <span class="ciclo-ring2"></span>
+            <div class="ciclo-hub">
+              <span class="ciclo-tag" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; color: rgba(201,168,76,0.85);">Pós-Graduação</span>
+              <span class="ciclo-big" data-countup style="display: block; margin-top: 8px; font-family: 'Playfair Display', serif; font-size: clamp(38px, 6vw, 52px); font-weight: 600; color: #C9A84C; line-height: 1;">20</span>
+              <span class="ciclo-mid" style="display: block; margin-top: 2px; font-size: 13.5px; font-weight: 600; color: rgba(250,248,245,0.85);">módulos</span>
+              <span class="ciclo-mid" style="display: block; margin-top: 10px; font-size: 14px; color: rgba(250,248,245,0.75);"><span data-countup style="color: #C9A84C; font-weight: 700;">9</span> partes · <span data-countup style="color: #C9A84C; font-weight: 700;">18</span> meses</span>
+              <span class="ciclo-small" style="display: block; margin-top: 12px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250,248,245,0.5);">Certificação MEC<br>EAD + presencial</span>
+            </div>
+            <sc-for list="{{ ciclo }}" as="c" hint-placeholder-count="9">
+              <button type="button" class="{{ c.cls }}" style="{{ c.pos }}" onClick="{{ c.pick }}" aria-label="{{ c.rotulo }}">
+                <span class="ciclo-dot">{{ c.n }}</span>
+                <span class="ciclo-lbl">{{ c.curto }}</span>
+              </button>
+            </sc-for>
           </div>
-          <div style="text-align: center; border: 1px solid rgba(201,168,76,0.35); border-radius: 1.6rem; padding: 24px 12px;">
-            <span data-countup style="display: block; font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; color: #C9A84C; line-height: 1;">20</span>
-            <span style="display: block; margin-top: 8px; font-size: 13px; color: rgba(250,248,245,0.65);">módulos</span>
-          </div>
-          <div style="text-align: center; border: 1px solid rgba(201,168,76,0.35); border-radius: 1.6rem; padding: 24px 12px;">
-            <span data-countup style="display: block; font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 600; color: #C9A84C; line-height: 1;">18</span>
-            <span style="display: block; margin-top: 8px; font-size: 13px; color: rgba(250,248,245,0.65);">meses</span>
-          </div>
-        </div>
-        <div>
-          <div style="display: flex; flex-direction: column;">
-            <p style="margin: 0; padding: 14px 0; border-top: 1px solid rgba(250,248,245,0.12); font-size: 15.5px; line-height: 1.6; color: rgba(250,248,245,0.85);"><strong style="color: #C9A84C;">Da base às 6 Performances.</strong> Passando por Medicina Regenerativa, Posicionamento e Marketing Médico e Trabalho de Conclusão de Curso.</p>
-            <p style="margin: 0; padding: 14px 0; border-top: 1px solid rgba(250,248,245,0.12); font-size: 15.5px; line-height: 1.6; color: rgba(250,248,245,0.85);"><strong style="color: #C9A84C;">Rigor acadêmico.</strong> Cada módulo com plano de ensino formal, carga teórica e prática.</p>
-            <p style="margin: 0; padding: 14px 0 0; border-top: 1px solid rgba(250,248,245,0.12); font-size: 15.5px; line-height: 1.6; color: rgba(250,248,245,0.85);"><strong style="color: #C9A84C;">Temas avançados.</strong> Peptídeos, epigenética do envelhecimento, microbioma e terapias hormonais seguras.</p>
+          <div class="ciclo-capwrap">
+            <p class="ciclo-caption" style="margin: 0; font-size: 15.5px; line-height: 1.65; color: rgba(250,248,245,0.85); text-align: center; text-wrap: pretty;"><strong style="color: #C9A84C;">{{ cicloAtivo.titulo }}.</strong> {{ cicloAtivo.desc }}</p>
           </div>
         </div>
       </div>
@@ -835,8 +868,9 @@ function createAnimPresets(anime) {
 }
 
 class Component extends DCLogic {
-  state = { openPos: null, openMet: null };
+  state = { openPos: null, openMet: null, cicloAtivo: 0 };
   componentDidMount() {
+    this._initCiclo();
     this._navPill = document.querySelector('.nav-pill');
     this._onScroll = () => {
       if (this._navPill) this._navPill.classList.toggle('nav-scrolled', window.scrollY > 80);
@@ -958,6 +992,14 @@ class Component extends DCLogic {
     }, { threshold: ANIM_TOKENS.revealThreshold, rootMargin: '0px 0px -6% 0px' });
     this._pendingReveals = new Set();
     document.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (el.__revealed) {
+        // Hot-swap de logica: o revert() do scope antigo zerou o opacity inline,
+        // mas o DOM (e o expando __revealed) persistem — entrega o estado final
+        // direto, fora do scope, em vez de esconder para sempre.
+        (el.hasAttribute('data-stagger') ? Array.from(el.children) : [el])
+          .forEach((t) => { t.style.opacity = 1; });
+        return;
+      }
       this._pendingReveals.add(el);
       this._revealObs.observe(el);
     });
@@ -1003,7 +1045,42 @@ class Component extends DCLogic {
       Array.from(el.children).forEach((c) => { c.style.opacity = 1; });
     }
   }
+  /* ---- Ciclo do currículo: nó ativo avança sozinho enquanto visível ---- */
+  _initCiclo() {
+    if (!('IntersectionObserver' in window)) return;
+    const stage = document.querySelector('.ciclo-stage');
+    if (!stage) return;
+    this._cicloHold = 0;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = () => {
+      if (this._cicloTimer || reduce) return;
+      this._cicloTimer = setInterval(() => {
+        if (Date.now() < this._cicloHold) return;
+        this._setCiclo(((this.state.cicloAtivo || 0) + 1) % 9);
+      }, 3200);
+    };
+    const stop = () => { if (this._cicloTimer) { clearInterval(this._cicloTimer); this._cicloTimer = 0; } };
+    // entries pode agrupar entrada+saida num so lote; o ultimo registro e o atual.
+    this._cicloObs = new IntersectionObserver((entries) => {
+      entries[entries.length - 1].isIntersecting ? start() : stop();
+    }, { threshold: 0.3 });
+    this._cicloObs.observe(stage);
+  }
+  _setCiclo(i) {
+    this.setState({ cicloAtivo: i }, () => {
+      const cap = document.querySelector('.ciclo-caption');
+      if (cap && this._anime) {
+        // Fora do scope de proposito: animacao recorrente registrada no scope
+        // acumularia um objeto por tick ate o unmount. Cancela a anterior.
+        if (this._capAnim) { try { this._capAnim.cancel(); } catch (e) {} }
+        this._capAnim = this._anime.animate(cap, {
+          opacity: [0, 1], translateY: [10, 0], duration: 450, ease: 'outExpo'
+        });
+      }
+    });
+  }
   _initDust() {
+    if (!('IntersectionObserver' in window)) return;
     const canvas = document.getElementById('goldDust');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -1032,6 +1109,7 @@ class Component extends DCLogic {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
+    this._dustResize = resize;
     window.addEventListener('resize', resize);
     const N = 2100;
     const rnd = Math.random;
@@ -1066,13 +1144,17 @@ class Component extends DCLogic {
     const start = () => { if (!this._dustRaf) this._dustRaf = requestAnimationFrame(tick); };
     const stop = () => { if (this._dustRaf) { cancelAnimationFrame(this._dustRaf); this._dustRaf = 0; } };
     this._dustObs = new IntersectionObserver((entries) => {
-      entries[0].isIntersecting ? start() : stop();
+      entries[entries.length - 1].isIntersecting ? start() : stop();
     }, { rootMargin: '100px' });
     this._dustObs.observe(canvas.parentElement);
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onScroll);
+    if (this._cicloObs) this._cicloObs.disconnect();
+    if (this._cicloTimer) { clearInterval(this._cicloTimer); this._cicloTimer = 0; }
+    if (this._capAnim) { try { this._capAnim.cancel(); } catch (e) {} this._capAnim = null; }
+    if (this._dustResize) { window.removeEventListener('resize', this._dustResize); this._dustResize = null; }
     if (this._dustObs) this._dustObs.disconnect();
     if (this._dustRaf) { cancelAnimationFrame(this._dustRaf); this._dustRaf = 0; }
     clearTimeout(this._animFailsafe);
@@ -1112,7 +1194,32 @@ class Component extends DCLogic {
       { big: 'Juntas', h: 'Comunidade exclusiva', d: 'Mulheres que vivem o mesmo.' },
       { big: '1 ano', h: 'De acesso completo', d: '6 meses intensivos + 6 de manutenção, porque emagrecer é uma coisa e manter, sem sanfona, é outra.' }
     ];
-    return { faqPos: mk(faqPosData, 'openPos'), faqMet: mk(faqMetData, 'openMet'), entregas };
+    /* Conteúdo real do cronograma da pós (PDF "CRONOGRAMA PÓS 2026/2027"). */
+    const CICLO_PARTES = [
+      { curto: 'Base', titulo: 'Parte 1 · Conceitos Básicos · Módulos 1 e 2', desc: 'Introdução à Medicina da Longevidade de Performance, o tripé da segurança médica, biologia do envelhecimento, biomarcadores e como iniciar um consultório de longevidade.' },
+      { curto: 'Mental', titulo: 'Parte 2 · Performance Mental · Módulo 3', desc: 'Saúde mental e longevidade: ansiedade, depressão, memória e cognição, farmacologia e medicina neurocomportamental.' },
+      { curto: 'Física', titulo: 'Parte 3 · Performance Física · Módulos 4 a 6', desc: 'Exercício como intervenção médica, saúde cardiovascular e sono e ciclos circadianos na longevidade.' },
+      { curto: 'Sexual', titulo: 'Parte 4 · Performance Sexual · Módulos 7 a 10', desc: 'Saúde hormonal da mulher e do homem: menopausa, terapia hormonal, reposição de testosterona e sarcopenia.' },
+      { curto: 'Metabólica', titulo: 'Parte 5 · Performance Metabólica · Módulos 11 a 16', desc: 'Emagrecimento e obesidade (com aula presencial), nutrologia, saúde intestinal e doenças endócrinas do adulto. O coração do programa.' },
+      { curto: 'Defensiva', titulo: 'Parte 6 · Performance Defensiva · Módulos 17 e 18', desc: 'Inflamação e longevidade, doenças autoimunes e medicina regenerativa: células-tronco, PRP e terapias teciduais.' },
+      { curto: 'Marketing', titulo: 'Parte 7 · Posicionamento e Marketing Médico · Módulo 19', desc: 'Posicionamento, presença digital, autoridade médica e a trajetória do lead à venda.' },
+      { curto: 'TCC', titulo: 'Parte 8 · Trabalho de Conclusão de Curso · Módulo 20', desc: 'Pesquisa científica, normas ABNT, metodologia e redação, com estratégias para levar o TCC a um mestrado.' },
+      { curto: 'Extra', titulo: 'Módulo Extra · Imersão em Hormônios Femininos', desc: 'Bônus com a Dra. Sarina: endocrinologia feminina, implantes hormonais na prática e neurocomportamento aplicado à adesão.' }
+    ];
+    const atv = this.state.cicloAtivo || 0;
+    const ciclo = CICLO_PARTES.map((c, i) => {
+      const ang = (i / CICLO_PARTES.length) * 2 * Math.PI - Math.PI / 2;
+      return {
+        ...c,
+        n: ('0' + (i + 1)).slice(-2),
+        pos: 'left: ' + (50 + 41 * Math.cos(ang)).toFixed(2) + '%; top: ' + (50 + 41 * Math.sin(ang)).toFixed(2) + '%;',
+        cls: 'ciclo-node' + (i === atv ? ' ciclo-on' : ''),
+        rotulo: c.titulo,
+        pick: () => { this._cicloHold = Date.now() + 9000; this._setCiclo(i); }
+      };
+    });
+    const cicloAtivo = CICLO_PARTES[atv];
+    return { faqPos: mk(faqPosData, 'openPos'), faqMet: mk(faqMetData, 'openMet'), entregas, ciclo, cicloAtivo };
   }
 }
 </script>
