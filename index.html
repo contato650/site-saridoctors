@@ -152,7 +152,8 @@ html.js-anim [data-hero] > * { opacity: 0; }
 }
 
 /* ===== Ciclo do currículo (#pos) =====
-   Círculo central com os números da pós + 7 partes em órbita, com nó ativo
+   Círculo central com os números da pós + os módulos do cronograma em órbita
+   (um dot numerado por módulo, nomes na legenda embaixo), com nó ativo
    avançando sozinho (ver _initCiclo no script). Posições left/top dos nós
    vêm inline via renderVals. Movimento (entrada, órbita do cometa, spin do
    anel, pulso do hub) é GSAP; sem GSAP o ciclo fica estático mas visível.
@@ -168,20 +169,16 @@ html.js-anim [data-hero] > * { opacity: 0; }
 .ciclo-hub > *:not(.ciclo-hub-blob) { position: relative; z-index: 1; }
 .ciclo-comet-wrap { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
 .ciclo-comet { position: absolute; left: 50%; top: 9%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: #F5DFA0; box-shadow: 0 0 6px 2px rgba(245,223,160,0.9), 0 0 18px 6px rgba(201,168,76,0.55), 0 0 40px 14px rgba(201,168,76,0.25); }
-.ciclo-node { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 7px; background: none; border: none; padding: 0; cursor: pointer; z-index: 2; font-family: 'Plus Jakarta Sans', sans-serif; }
-.ciclo-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700; color: #C9A84C; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-sizing: border-box; transition: background .35s cubic-bezier(0.25,0.46,0.45,0.94), border-color .35s cubic-bezier(0.25,0.46,0.45,0.94), color .35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow .35s cubic-bezier(0.25,0.46,0.45,0.94); }
-.ciclo-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: rgba(250,248,245,0.55); line-height: 1.2; max-width: 96px; transition: color .35s; }
+.ciclo-node { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0; cursor: pointer; z-index: 2; font-family: 'Plus Jakarta Sans', sans-serif; }
+.ciclo-dot { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 700; color: #C9A84C; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-sizing: border-box; transition: background .35s cubic-bezier(0.25,0.46,0.45,0.94), border-color .35s cubic-bezier(0.25,0.46,0.45,0.94), color .35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow .35s cubic-bezier(0.25,0.46,0.45,0.94); }
 .ciclo-node:hover .ciclo-dot { border-color: #D9BC66; color: #FAF8F5; }
-.ciclo-node.ciclo-on .ciclo-dot { background: #C9A84C; color: #14090B; border-color: #C9A84C; box-shadow: 0 0 0 8px rgba(201,168,76,0.16), 0 0 30px rgba(201,168,76,0.5); }
-.ciclo-node.ciclo-on .ciclo-lbl { color: #FAF8F5; }
+.ciclo-node.ciclo-on .ciclo-dot { background: #C9A84C; color: #14090B; border-color: #C9A84C; box-shadow: 0 0 0 6px rgba(201,168,76,0.16), 0 0 26px rgba(201,168,76,0.5); }
 .ciclo-capwrap { margin: 20px auto 0; max-width: 640px; min-height: 104px; }
 .ciclo-node:focus { outline: none; }
 .ciclo-node:focus-visible .ciclo-dot { box-shadow: 0 0 0 2.5px #FAF8F5, 0 0 0 8px rgba(201,168,76,0.16); }
 @media (max-width: 640px) { .ciclo-capwrap { min-height: 140px; } }
 @media (max-width: 480px) {
-  .ciclo-lbl { font-size: 9px; max-width: 64px; letter-spacing: 0.01em; }
-  .ciclo-node { gap: 4px; }
-  .ciclo-dot { width: 30px; height: 30px; font-size: 10.5px; }
+  .ciclo-dot { width: 22px; height: 22px; font-size: 9px; }
   .ciclo-hub { width: 56%; }
   .ciclo-hub .ciclo-tag { font-size: 8.5px !important; letter-spacing: 0.14em !important; }
   .ciclo-hub .ciclo-big { font-size: 30px !important; }
@@ -502,7 +499,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <div style="position: absolute; left: 50%; top: -20%; width: 70%; aspect-ratio: 1 / 1; transform: translateX(-50%); background: radial-gradient(circle, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0) 65%); pointer-events: none;"></div>
         <div style="position: relative; z-index: 1;">
           <h3 style="margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(22px, 3vw, 30px); font-weight: 500; color: #FAF8F5; text-align: center;">O ciclo da formação</h3>
-          <p style="margin: 10px 0 0; font-size: 14.5px; color: rgba(250,248,245,0.55); text-align: center;">Da base ao marketing médico, módulo a módulo. Toque em uma parte para explorar.</p>
+          <p style="margin: 10px 0 0; font-size: 14.5px; color: rgba(250,248,245,0.55); text-align: center;">Os 19 módulos do cronograma, da base ao marketing médico. Toque em um módulo para explorar.</p>
           <div class="ciclo-stage">
             <span class="ciclo-ring"></span>
             <span class="ciclo-ring2"></span>
@@ -515,10 +512,9 @@ html.js-anim [data-hero] > * { opacity: 0; }
               <span class="ciclo-mid" style="display: block; margin-top: 10px; font-size: 14px; color: rgba(250,248,245,0.75);"><span data-countup style="color: #C9A84C; font-weight: 700;">7</span> partes · <span data-countup style="color: #C9A84C; font-weight: 700;">18</span> meses</span>
               <span class="ciclo-small" style="display: block; margin-top: 12px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250,248,245,0.5);">Certificação MEC<br>EAD + presencial</span>
             </div>
-            <sc-for list="{{ ciclo }}" as="c" hint-placeholder-count="7">
+            <sc-for list="{{ ciclo }}" as="c" hint-placeholder-count="20">
               <button type="button" class="{{ c.cls }}" style="{{ c.pos }}" onClick="{{ c.pick }}" aria-label="{{ c.rotulo }}">
                 <span class="ciclo-dot">{{ c.n }}</span>
-                <span class="ciclo-lbl">{{ c.curto }}</span>
               </button>
             </sc-for>
           </div>
@@ -1142,8 +1138,8 @@ class Component extends DCLogic {
       if (this._cicloTimer || reduce) return;
       this._cicloTimer = setInterval(() => {
         if (Date.now() < this._cicloHold) return;
-        this._setCiclo(((this.state.cicloAtivo || 0) + 1) % (this._cicloN || 7));
-      }, 3200);
+        this._setCiclo(((this.state.cicloAtivo || 0) + 1) % (this._cicloN || 20));
+      }, 2800);
     };
     const stop = () => { if (this._cicloTimer) { clearInterval(this._cicloTimer); this._cicloTimer = 0; } };
     // entries pode agrupar entrada+saida num so lote; o ultimo registro e o atual.
@@ -1238,7 +1234,7 @@ class Component extends DCLogic {
         // e assenta com fisica elastica (o morph de border-radius segue solto).
         const blob = document.querySelector('.ciclo-hub-blob');
         if (blob) {
-          const ang = (i / (this._cicloN || 7)) * 360 - 90;
+          const ang = (i / (this._cicloN || 20)) * 360 - 90;
           g.killTweensOf(blob, 'rotation,scaleX,scaleY');
           g.timeline()
             .to(blob, { rotation: ang + '_short', scaleX: 1.07, scaleY: 0.95, duration: 0.28, ease: 'power2.out' })
@@ -1372,31 +1368,44 @@ class Component extends DCLogic {
       { big: 'Juntas', h: 'Comunidade exclusiva', d: 'Mulheres que vivem o mesmo.' },
       { big: '1 ano', h: 'De acesso completo', d: '6 meses intensivos + 6 de manutenção, porque emagrecer é uma coisa e manter, sem sanfona, é outra.' }
     ];
-    /* Nomes reais dos módulos do cronograma da pós (PDF "CRONOGRAMA PÓS 2026/2027"):
-       módulos 1 a 19 nas 7 partes de conteúdo — TCC e módulo extra ficam fora do ciclo. */
-    const CICLO_PARTES = [
-      { curto: 'Base', etiqueta: 'Parte 1 · Módulos 1 e 2', nome: 'Conceitos Básicos', desc: 'Módulo 1: Introdução à Medicina da Longevidade de Performance. Módulo 2: Fundamentos da Biologia da Longevidade.' },
-      { curto: 'Mental', etiqueta: 'Parte 2 · Módulo 3', nome: 'Performance Mental', desc: 'Módulo 3: Saúde Mental e Longevidade, partes 1 e 2.' },
-      { curto: 'Física', etiqueta: 'Parte 3 · Módulos 4 a 6', nome: 'Performance Física', desc: 'Módulo 4: Exercício na Longevidade. Módulo 5: Saúde Cardiovascular na Longevidade. Módulo 6: Sono e Ciclos Circadianos.' },
-      { curto: 'Sexual', etiqueta: 'Parte 4 · Módulos 7 a 10', nome: 'Performance Sexual', desc: 'Módulos 7 e 8: Saúde Hormonal da Mulher na Longevidade. Módulos 9 e 10: Saúde Hormonal do Homem na Longevidade.' },
-      { curto: 'Metabólica', etiqueta: 'Parte 5 · Módulos 11 a 16', nome: 'Performance Metabólica', desc: 'Módulo 11: Emagrecimento e Obesidade. Módulo 12: Nutrologia Aplicada. Módulo 13: Saúde Intestinal. Módulos 14 a 16: Doenças Endócrinas do Adulto.' },
-      { curto: 'Defensiva', etiqueta: 'Parte 6 · Módulos 17 e 18', nome: 'Performance Defensiva', desc: 'Módulo 17: Inflamação e Longevidade. Módulo 18: Medicina Regenerativa.' },
-      { curto: 'Marketing', etiqueta: 'Parte 7 · Módulo 19', nome: 'Marketing', desc: 'Módulo 19: Posicionamento e Marketing Médico.' }
+    /* Módulos reais do cronograma da pós (PDF "CRONOGRAMA PÓS 2026/2027"),
+       um nó por módulo — módulos 1 a 19, com o 3 dividido em 3.1/3.2 como no
+       cronograma. TCC (módulo 20) e módulo extra ficam fora do ciclo. */
+    const CICLO_MODULOS = [
+      { n: '1', etiqueta: 'Módulo 1 · Conceitos Básicos', nome: 'Introdução à Medicina da Longevidade de Performance', desc: 'Healthspan vs. lifespan, o tripé da segurança médica, o mercado da longevidade e como iniciar um consultório.' },
+      { n: '2', etiqueta: 'Módulo 2 · Conceitos Básicos', nome: 'Fundamentos da Biologia da Longevidade', desc: 'Teorias do envelhecimento, telômeros, epigenética, avaliação clínica e biomarcadores de performance.' },
+      { n: '3.1', etiqueta: 'Módulo 3 (Parte 1) · Performance Mental', nome: 'Saúde Mental e Longevidade', desc: 'Doenças psiquiátricas do adulto: ansiedade, depressão, memória e cognição, transtornos alimentares e farmacologia.' },
+      { n: '3.2', etiqueta: 'Módulo 3 (Parte 2) · Performance Mental', nome: 'Medicina Neurocomportamental', desc: 'Introdução à Medicina Neurocomportamental: ansiedade, estresse e autoestima.' },
+      { n: '4', etiqueta: 'Módulo 4 · Performance Física', nome: 'Exercício na Longevidade', desc: 'Treino de força e potência como intervenção médica, condicionamento cardiorrespiratório, avaliação física e prescrição prática.' },
+      { n: '5', etiqueta: 'Módulo 5 · Performance Física', nome: 'Saúde Cardiovascular na Longevidade', desc: 'Hipertensão, dislipidemias, riscos cardiovasculares e hormônios, prevenção, suplementos validados e arritmias.' },
+      { n: '6', etiqueta: 'Módulo 6 · Performance Física', nome: 'Sono e Ciclos Circadianos', desc: 'Neurofisiologia do sono, distúrbios e consequências sistêmicas, estratégias de otimização na longevidade.' },
+      { n: '7', etiqueta: 'Módulo 7 · Performance Sexual', nome: 'Saúde Hormonal da Mulher — Parte 1', desc: 'Envelhecimento feminino, endocrinologia da mulher madura, menopausa e pós-menopausa.' },
+      { n: '8', etiqueta: 'Módulo 8 · Performance Sexual', nome: 'Saúde Hormonal da Mulher — Parte 2', desc: 'Terapia hormonal e não hormonal, sexualidade, medicina preventiva e sarcopenia na mulher.' },
+      { n: '9', etiqueta: 'Módulo 9 · Performance Sexual', nome: 'Saúde Hormonal do Homem — Parte 1', desc: 'Eixo hormonal masculino, deficiência androgênica do envelhecimento e reposição de testosterona com segurança.' },
+      { n: '10', etiqueta: 'Módulo 10 · Performance Sexual', nome: 'Saúde Hormonal do Homem — Parte 2', desc: 'Saúde sexual, sarcopenia e força muscular do homem, casos clínicos e condutas individualizadas.' },
+      { n: '11', etiqueta: 'Módulo 11 · Performance Metabólica', nome: 'Emagrecimento e Obesidade', desc: 'Presencial ou on-line: neurobiologia da obesidade, estratégias nutricionais, farmacoterapia e protocolos integrados.' },
+      { n: '12', etiqueta: 'Módulo 12 · Performance Metabólica', nome: 'Nutrologia Aplicada à Longevidade', desc: 'Avaliação nutricional do adulto e do idoso, pilares para cognição, músculo e coração, suplementação.' },
+      { n: '13', etiqueta: 'Módulo 13 · Performance Metabólica', nome: 'Saúde Intestinal e Longevidade', desc: 'Microbiota, imunidade e metabolismo, prebióticos, probióticos e pós-bióticos, disbiose e constipação.' },
+      { n: '14', etiqueta: 'Módulo 14 · Performance Metabólica', nome: 'Doenças Endócrinas do Adulto — Parte 1', desc: 'Diabetes tipo 1 e 2, disfunções da adrenal e uso ético do hormônio do crescimento.' },
+      { n: '15', etiqueta: 'Módulo 15 · Performance Metabólica', nome: 'Doenças Endócrinas do Adulto — Parte 2: Tireoide', desc: 'Fisiologia e disfunções da tireoide, interpretação de exames e opções terapêuticas comprovadas.' },
+      { n: '16', etiqueta: 'Módulo 16 · Performance Metabólica', nome: 'Doenças Endócrinas do Adulto — Parte 3: Osteoporose', desc: 'Fisiopatologia, diagnóstico e avaliação de risco de fraturas, tratamento farmacológico e prevenção.' },
+      { n: '17', etiqueta: 'Módulo 17 · Performance Defensiva', nome: 'Inflamação e Longevidade', desc: 'Síndromes inflamatórias, inflamograma, doenças autoimunes e estratégias desinflamatórias.' },
+      { n: '18', etiqueta: 'Módulo 18 · Performance Defensiva', nome: 'Medicina Regenerativa', desc: 'Células-tronco, PRP e bioestímulo tecidual, terapias regenerativas para articulações, pele, intestino e sistema nervoso.' },
+      { n: '19', etiqueta: 'Módulo 19 · Marketing', nome: 'Posicionamento e Marketing Médico', desc: 'Posicionamento, presença digital, autoridade médica e do lead à venda.' }
     ];
-    this._cicloN = CICLO_PARTES.length;
+    this._cicloN = CICLO_MODULOS.length;
     const atv = this.state.cicloAtivo || 0;
-    const ciclo = CICLO_PARTES.map((c, i) => {
-      const ang = (i / CICLO_PARTES.length) * 2 * Math.PI - Math.PI / 2;
+    const ciclo = CICLO_MODULOS.map((c, i) => {
+      const ang = (i / CICLO_MODULOS.length) * 2 * Math.PI - Math.PI / 2;
       return {
         ...c,
-        n: ('0' + (i + 1)).slice(-2),
         pos: 'left: ' + (50 + 41 * Math.cos(ang)).toFixed(2) + '%; top: ' + (50 + 41 * Math.sin(ang)).toFixed(2) + '%;',
         cls: 'ciclo-node' + (i === atv ? ' ciclo-on' : ''),
         rotulo: c.etiqueta + ': ' + c.nome,
         pick: () => { this._cicloHold = Date.now() + 9000; this._setCiclo(i); }
       };
     });
-    const cicloAtivo = CICLO_PARTES[atv];
+    const cicloAtivo = CICLO_MODULOS[atv];
     return { faqPos: mk(faqPosData, 'openPos'), faqMet: mk(faqMetData, 'openMet'), entregas, ciclo, cicloAtivo };
   }
 }
