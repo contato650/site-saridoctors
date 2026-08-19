@@ -49,6 +49,7 @@ a:hover { color: #A07C24; }
 
 /* ===== Responsivo ===== */
 .nav-toggle, .nav-burger { display: none; }
+.pos-pill-short { display: none; }
 @media (max-width: 920px) {
   .nav-pill { position: relative; }
   .nav-burger { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; box-sizing: border-box; cursor: pointer; flex-shrink: 0; }
@@ -75,6 +76,32 @@ a:hover { color: #A07C24; }
   .perf-panel { padding: 26px 18px 20px !important; border-radius: 2rem !important; }
   .rede-card { padding: 30px 24px !important; border-radius: 2rem !important; }
   .rede-card .rede-glow { display: none; }
+
+  /* Página mais curta: paddings de seção e spacers internos reduzidos.
+     Sections e spacers usam estilo inline, por isso o !important. */
+  #credibilidade, #imersoes, #sobre { padding: 60px 0 !important; }
+  #saridoctors { padding: 64px 0 28px !important; }
+  #pos { margin-top: 48px !important; padding: 60px 0 !important; }
+  #redes { padding: 60px 0 64px !important; }
+  .pad-block { padding-top: 56px !important; padding-bottom: 56px !important; }
+  #contato > div { padding: 48px 20px 28px !important; }
+  .subsec { margin-top: 40px !important; }
+
+  /* Grids em 2 colunas no telefone (cards curtos aguentam ~165px de largura) */
+  .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .stats-grid > div { padding: 18px 16px !important; border-radius: 1.4rem !important; }
+  .stats-grid [data-countup] { font-size: 30px !important; }
+  .entregas-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .entregas-grid > div { padding: 18px 14px !important; border-radius: 1.4rem !important; }
+  .entregas-grid > div > span:first-child { font-size: 24px !important; }
+  .entregas-grid h4 { font-size: 16px !important; }
+  .entregas-grid p { font-size: 13px !important; }
+  .foot-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 26px 18px !important; }
+
+  /* Pílula da pós: versão curta no telefone */
+  .pos-pill-full { display: none; }
+  .pos-pill-short { display: inline; text-align: center; line-height: 1.6; }
+  .pos-pill { border-radius: 18px !important; padding: 8px 14px !important; }
 }
 
 /* ===== Camada de animação (Anime.js v4) =====
@@ -112,11 +139,20 @@ html.js-anim [data-hero] > * { opacity: 0; }
    As 5 colunas ficam fixas no desktop e caem em degraus; o grid-template-columns
    e inline, entao as regras responsivas precisam de !important. */
 @media (max-width: 1000px) { .perf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
-@media (max-width: 700px) { .perf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
-@media (max-width: 440px) { .perf-grid { grid-template-columns: 1fr !important; } }
+@media (max-width: 700px) {
+  .perf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .perf-grid > div:last-child { grid-column: 1 / -1; }
+  .perf-grid > div { padding: 18px 16px !important; border-radius: 1.4rem !important; }
+  .perf-grid h4 { font-size: 17px !important; }
+  .perf-grid p { font-size: 13px !important; }
+}
+@media (max-width: 480px) {
+  .perf-badge { padding: 9px 16px !important; gap: 9px !important; max-width: calc(100% - 16px); }
+  .perf-badge h4 { font-size: 14.5px !important; }
+}
 
 /* ===== Ciclo do currículo (#pos) =====
-   Círculo central com os números da pós + 9 partes em órbita, com nó ativo
+   Círculo central com os números da pós + 7 partes em órbita, com nó ativo
    avançando sozinho (ver _initCiclo no script). Posições left/top dos nós
    vêm inline via renderVals. Movimento (entrada, órbita do cometa, spin do
    anel, pulso do hub) é GSAP; sem GSAP o ciclo fica estático mas visível.
@@ -141,18 +177,19 @@ html.js-anim [data-hero] > * { opacity: 0; }
 .ciclo-capwrap { margin: 20px auto 0; max-width: 640px; min-height: 104px; }
 .ciclo-node:focus { outline: none; }
 .ciclo-node:focus-visible .ciclo-dot { box-shadow: 0 0 0 2.5px #FAF8F5, 0 0 0 8px rgba(201,168,76,0.16); }
-@media (max-width: 640px) { .ciclo-capwrap { min-height: 160px; } }
+@media (max-width: 640px) { .ciclo-capwrap { min-height: 140px; } }
 @media (max-width: 480px) {
-  .ciclo-lbl { display: none; }
-  .ciclo-dot { width: 32px; height: 32px; font-size: 11px; }
-  .ciclo-hub { width: 60%; }
+  .ciclo-lbl { font-size: 9px; max-width: 64px; letter-spacing: 0.01em; }
+  .ciclo-node { gap: 4px; }
+  .ciclo-dot { width: 30px; height: 30px; font-size: 10.5px; }
+  .ciclo-hub { width: 56%; }
   .ciclo-hub .ciclo-tag { font-size: 8.5px !important; letter-spacing: 0.14em !important; }
   .ciclo-hub .ciclo-big { font-size: 30px !important; }
-  .ciclo-hub .ciclo-mid { font-size: 12px !important; margin-top: 4px !important; }
-  .ciclo-hub .ciclo-small { font-size: 8.5px !important; letter-spacing: 0.04em !important; margin-top: 6px !important; }
-  .ciclo-capwrap { min-height: 185px; }
+  .ciclo-hub .ciclo-mid { font-size: 11.5px !important; margin-top: 4px !important; }
+  .ciclo-hub .ciclo-small { display: none !important; }
+  .ciclo-capwrap { min-height: 148px; }
 }
-@media (max-width: 360px) { .ciclo-hub { width: 66%; } }
+@media (max-width: 360px) { .ciclo-hub { width: 60%; } }
 @media (prefers-reduced-motion: reduce) {
   .ciclo-comet-wrap { display: none; }
   .ciclo-dot { transition: none; }
@@ -256,7 +293,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
     <p data-reveal="fadeUp" style="margin: 0 0 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C;">/ A médica mentora</p>
     <h2 data-reveal="fadeUp" data-reveal-delay="80" style="margin: 0; font-size: clamp(32px, 5vw, 54px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: #FAF8F5; max-width: 760px;">Por que aprender com a <em style="font-family: 'Playfair Display', serif; font-weight: 500; color: #C9A84C;">Dra. Sarina</em></h2>
     <p data-reveal="fadeUp" data-reveal-delay="160" style="margin: 24px 0 0; max-width: 700px; font-size: 17.5px; line-height: 1.75; color: rgba(250,248,245,0.82); text-wrap: pretty;">Médica há 31 anos, bacharel e mestre em Direito. Pioneira no estudo do cortisol no Brasil, criadora do conceito de &ldquo;Cura da Obesidade&rdquo; e do método Neuro-obesogênese. Aos 35 anos entrou na menopausa, eliminou 20kg e se mantém há mais de 12 anos, sem rebote. O que ensina e clinica, viveu primeiro.</p>
-    <div data-reveal="fadeUp" data-stagger style="margin-top: 52px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+    <div class="stats-grid" data-reveal="fadeUp" data-stagger style="margin-top: 52px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
       <div style="border: 1px solid rgba(201,168,76,0.35); border-radius: 2rem; padding: 26px 24px;">
         <span data-countup style="display: block; font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 600; color: #C9A84C; line-height: 1;">15</span>
         <span style="display: block; margin-top: 8px; font-size: 14px; color: rgba(250,248,245,0.72);">anos como mentora de médicos</span>
@@ -314,7 +351,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
       <p style="margin: 26px 0 0; max-width: 660px; font-size: 17.5px; line-height: 1.7; color: #4A3E3A; text-wrap: pretty;">A canetinha trata só o sintoma. O médico que só prescreve caneta emagrece o paciente, mas ninguém se &ldquo;cura&rdquo;. A SariDoctors forma o médico que domina o conteúdo e seu paciente através dos conhecimentos em neurocomportamento, hormônio, metabolismo e longevidade.</p>
     </div>
 
-    <div style="margin-top: 64px;">
+    <div class="subsec" style="margin-top: 64px;">
       <p data-reveal="fadeUp" style="margin: 0 0 24px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6D1F;">/ O método</p>
       <div data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
         <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 34px 30px; transition: all .35s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,9,11,0.1);">
@@ -337,7 +374,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
   </div>
 
   <div style="margin-top: 80px; background: #14090B; border-radius: 3rem; max-width: 1240px; margin-left: auto; margin-right: auto; position: relative; overflow: hidden;">
-    <div style="position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 90px 28px;">
+    <div class="pad-block" style="position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 90px 28px;">
       <p data-reveal="fadeUp" style="margin: 0 0 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C; text-align: center;">/ Que médico você quer ser</p>
       <h3 data-reveal="fadeUp" data-reveal-delay="80" style="margin: 0 0 48px; font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(24px, 3.4vw, 34px); font-weight: 500; color: #FAF8F5; text-align: center;">Dois caminhos, dois futuros</h3>
       <div data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: stretch;">
@@ -404,8 +441,9 @@ html.js-anim [data-hero] > * { opacity: 0; }
     <div data-reveal="fadeUp">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 44px; align-items: center;">
         <div>
-          <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 999px; border: 1px solid #D9C69A; background: #FBF6E9;">
-            <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D1F;">Pós-Graduação · 18 meses · Certificação reconhecida pelo MEC · EAD com componente presencial</span>
+          <div class="pos-pill" style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 999px; border: 1px solid #D9C69A; background: #FBF6E9;">
+            <span class="pos-pill-full" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D1F;">Pós-Graduação · 18 meses · Certificação reconhecida pelo MEC · EAD com componente presencial</span>
+            <span class="pos-pill-short" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D1F;">Pós-Graduação · 18 meses · MEC · EAD + presencial</span>
           </div>
           <h2 style="margin: 30px 0 0; font-size: clamp(34px, 5.5vw, 60px); font-weight: 800; line-height: 1.02; letter-spacing: -0.02em; color: #1C1416; max-width: 840px;">Pós-Graduação em Medicina da <em style="font-family: 'Playfair Display', serif; font-weight: 500; color: #8A6D1F;">Longevidade de Performance</em></h2>
           <p style="margin: 20px 0 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(21px, 3vw, 28px); font-weight: 500; color: #8A6D1F;">A única pós com Raciocínio Clínico Integrado do Brasil.</p>
@@ -417,11 +455,11 @@ html.js-anim [data-hero] > * { opacity: 0; }
       </div>
     </div>
 
-    <div style="margin-top: 68px;">
+    <div class="subsec" style="margin-top: 68px;">
       <p data-reveal="fadeUp" style="margin: 0 0 6px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6D1F;">/ As 6 Performances</p>
       <p data-reveal="fadeUp" data-reveal-delay="80" style="margin: 0 0 24px; font-size: 15px; color: #8A7A72;">A plenitude da longevidade.</p>
       <div class="perf-panel" data-reveal="fadeUp" data-reveal-delay="120" style="position: relative; margin-top: 30px; border: 1.5px solid #C9A84C; border-radius: 2.5rem; background: radial-gradient(ellipse 90% 70% at 50% 0%, #FBF6E9 0%, rgba(251,246,233,0.5) 55%, rgba(255,255,255,0) 100%); box-shadow: 0 0 0 6px rgba(201,168,76,0.07), 0 24px 60px rgba(138,109,31,0.08); padding: 54px 28px 28px;">
-        <div style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 14px; padding: 13px 26px; border-radius: 999px; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-shadow: 0 14px 34px rgba(20,9,11,0.3); white-space: nowrap;">
+        <div class="perf-badge" style="position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 14px; padding: 13px 26px; border-radius: 999px; background: #14090B; border: 1px solid rgba(201,168,76,0.55); box-shadow: 0 14px 34px rgba(20,9,11,0.3); white-space: nowrap;">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; color: #C9A84C;">VI</span>
           <span style="width: 1px; height: 18px; background: rgba(201,168,76,0.45);"></span>
           <h4 style="margin: 0; font-family: 'Playfair Display', serif; font-size: clamp(17px, 2.4vw, 23px); font-weight: 600; line-height: 1; color: #FAF8F5;">Performance Espiritual</h4>
@@ -458,7 +496,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
       </div>
     </div>
 
-    <div style="margin-top: 68px;">
+    <div class="subsec" style="margin-top: 68px;">
       <p data-reveal="fadeUp" style="margin: 0 0 20px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6D1F;">/ O currículo por dentro</p>
       <div class="ciclo-panel" data-reveal="fadeUp" style="background: #14090B; border-radius: 2.5rem; padding: 46px 28px 38px; color: #FAF8F5; position: relative; overflow: hidden;">
         <div style="position: absolute; left: 50%; top: -20%; width: 70%; aspect-ratio: 1 / 1; transform: translateX(-50%); background: radial-gradient(circle, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0) 65%); pointer-events: none;"></div>
@@ -474,7 +512,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
               <span class="ciclo-tag" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; color: rgba(201,168,76,0.85);">Pós-Graduação</span>
               <span class="ciclo-big" data-countup style="display: block; margin-top: 8px; font-family: 'Playfair Display', serif; font-size: clamp(38px, 6vw, 52px); font-weight: 600; color: #C9A84C; line-height: 1;">20</span>
               <span class="ciclo-mid" style="display: block; margin-top: 2px; font-size: 13.5px; font-weight: 600; color: rgba(250,248,245,0.85);">módulos</span>
-              <span class="ciclo-mid" style="display: block; margin-top: 10px; font-size: 14px; color: rgba(250,248,245,0.75);"><span data-countup style="color: #C9A84C; font-weight: 700;">9</span> partes · <span data-countup style="color: #C9A84C; font-weight: 700;">18</span> meses</span>
+              <span class="ciclo-mid" style="display: block; margin-top: 10px; font-size: 14px; color: rgba(250,248,245,0.75);"><span data-countup style="color: #C9A84C; font-weight: 700;">7</span> partes · <span data-countup style="color: #C9A84C; font-weight: 700;">18</span> meses</span>
               <span class="ciclo-small" style="display: block; margin-top: 12px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250,248,245,0.5);">Certificação MEC<br>EAD + presencial</span>
             </div>
             <sc-for list="{{ ciclo }}" as="c" hint-placeholder-count="7">
@@ -495,7 +533,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
       </div>
     </div>
 
-    <div style="margin-top: 68px;">
+    <div class="subsec" style="margin-top: 68px;">
       <p data-reveal="fadeUp" style="margin: 0 0 20px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6D1F;">/ Diferenciais</p>
       <div data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
         <div style="background: #FFFFFF; border: 1px solid #EBE4D9; border-radius: 2rem; padding: 30px 28px;">
@@ -520,7 +558,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
       </div>
     </div>
 
-    <div style="margin-top: 68px;">
+    <div class="subsec" style="margin-top: 68px;">
       <p data-reveal="fadeUp" style="margin: 0 0 20px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #8A6D1F;">/ Perguntas frequentes</p>
       <div data-reveal="fadeIn" style="display: flex; flex-direction: column; gap: 12px; max-width: 820px;">
         <sc-for list="{{ faqPos }}" as="f" hint-placeholder-count="3">
@@ -544,7 +582,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
 
 <section id="metodo" data-screen-label="Método Sari" style="scroll-margin-top: 96px; padding: 60px 0;">
   <div style="background: #F6EEE4; border-radius: 3rem; max-width: 1240px; margin: 0 auto;">
-    <div style="max-width: 1080px; margin: 0 auto; padding: 90px 28px;">
+    <div class="pad-block" style="max-width: 1080px; margin: 0 auto; padding: 90px 28px;">
       <div data-reveal="fadeUp">
         <div class="sec-row" style="display: flex; align-items: center; gap: 18px; margin-bottom: 40px;">
           <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #7A3B1E; white-space: nowrap;">Experiência 03 · O Tratamento</span>
@@ -573,9 +611,9 @@ html.js-anim [data-hero] > * { opacity: 0; }
         </div>
       </div>
 
-      <div style="margin-top: 64px;">
+      <div class="subsec" style="margin-top: 64px;">
         <p data-reveal="fadeUp" style="margin: 0 0 24px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #7A3B1E;">/ O que você recebe</p>
-        <div data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+        <div class="entregas-grid" data-reveal="fadeUp" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
           <sc-for list="{{ entregas }}" as="e" hint-placeholder-count="8">
             <div style="background: #FFFDFA; border: 1px solid #EADFCF; border-radius: 2rem; padding: 30px 28px; transition: all .3s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: translateY(-3px); box-shadow: 0 18px 40px rgba(42,27,18,0.1); border-color: #C9A84C;">
               <span style="display: block; font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 600; color: #C9A84C; line-height: 1;">{{ e.big }}</span>
@@ -586,7 +624,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
         </div>
       </div>
 
-      <div style="margin-top: 64px;">
+      <div class="subsec" style="margin-top: 64px;">
         <p data-reveal="fadeUp" style="margin: 0 0 20px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #7A3B1E;">/ Perguntas frequentes</p>
         <div data-reveal="fadeIn" style="display: flex; flex-direction: column; gap: 12px; max-width: 820px;">
           <sc-for list="{{ faqMet }}" as="f" hint-placeholder-count="4">
@@ -745,7 +783,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
       </a>
     </div>
 
-    <div data-reveal="fadeUp" style="margin-top: 64px; display: flex; align-items: center; gap: 18px;">
+    <div class="subsec" data-reveal="fadeUp" style="margin-top: 64px; display: flex; align-items: center; gap: 18px;">
       <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #C9A84C; white-space: nowrap;">O ecossistema Sari</span>
       <span class="sec-line" style="flex: 1; height: 1px; background: rgba(201,168,76,0.25);"></span>
     </div>
@@ -779,7 +817,7 @@ html.js-anim [data-hero] > * { opacity: 0; }
 
 <footer id="contato" data-screen-label="Rodapé" style="scroll-margin-top: 96px; background: #14090B; color: #B9A9A3; border-top: 1px solid rgba(201,168,76,0.15);">
   <div style="max-width: 1080px; margin: 0 auto; padding: 72px 28px 40px;">
-    <div data-reveal="fadeIn" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px;">
+    <div class="foot-grid" data-reveal="fadeIn" data-stagger style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px;">
       <div>
         <img src="uploads/logo-saridoctors.png" alt="SariDoctors" style="height: 52px; display: block; margin-bottom: 16px;">
         <p style="margin: 0; font-size: 13px; line-height: 1.7;">SARI CURSOS LTDA<br>CNPJ 49.352.058/0001-93<br>Rua Ministro Orozimbo Nonato, 102, sala 2008B<br>Vila da Serra, Nova Lima, MG</p>
@@ -1341,7 +1379,7 @@ class Component extends DCLogic {
       { curto: 'Mental', etiqueta: 'Parte 2 · Módulo 3', nome: 'Performance Mental', desc: 'Módulo 3: Saúde Mental e Longevidade, partes 1 e 2.' },
       { curto: 'Física', etiqueta: 'Parte 3 · Módulos 4 a 6', nome: 'Performance Física', desc: 'Módulo 4: Exercício na Longevidade. Módulo 5: Saúde Cardiovascular na Longevidade. Módulo 6: Sono e Ciclos Circadianos.' },
       { curto: 'Sexual', etiqueta: 'Parte 4 · Módulos 7 a 10', nome: 'Performance Sexual', desc: 'Módulos 7 e 8: Saúde Hormonal da Mulher na Longevidade. Módulos 9 e 10: Saúde Hormonal do Homem na Longevidade.' },
-      { curto: 'Metabólica', etiqueta: 'Parte 5 · Módulos 11 a 16', nome: 'Performance Metabólica', desc: 'Módulo 11: Emagrecimento e Obesidade. Módulo 12: Nutrologia Aplicada à Longevidade. Módulo 13: Saúde Intestinal e Longevidade. Módulos 14 a 16: Doenças Endócrinas Comuns do Adulto.' },
+      { curto: 'Metabólica', etiqueta: 'Parte 5 · Módulos 11 a 16', nome: 'Performance Metabólica', desc: 'Módulo 11: Emagrecimento e Obesidade. Módulo 12: Nutrologia Aplicada. Módulo 13: Saúde Intestinal. Módulos 14 a 16: Doenças Endócrinas do Adulto.' },
       { curto: 'Defensiva', etiqueta: 'Parte 6 · Módulos 17 e 18', nome: 'Performance Defensiva', desc: 'Módulo 17: Inflamação e Longevidade. Módulo 18: Medicina Regenerativa.' },
       { curto: 'Marketing', etiqueta: 'Parte 7 · Módulo 19', nome: 'Marketing', desc: 'Módulo 19: Posicionamento e Marketing Médico.' }
     ];
