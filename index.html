@@ -188,6 +188,23 @@ html.js-anim [data-hero] > * { opacity: 0; }
   .rede-rule { transition: none; }
 }
 
+/* ===== Vídeo da imersão (#imersoes) =====
+   Cartão com o vídeo vertical 9:16 e o texto ao lado. O botão dourado cobre
+   o poster e some no primeiro clique (estado videoOn), liberando os controles
+   nativos. Hover/foco precisam de !important porque o estilo do dot é inline. */
+.video-play { -webkit-tap-highlight-color: transparent; }
+.video-play:hover .video-play-dot { transform: translate(-50%, -50%) scale(1.07) !important; background: #D9BC66 !important; }
+.video-play:focus { outline: none; }
+.video-play:focus-visible .video-play-dot { box-shadow: 0 0 0 3px #FAF8F5, 0 0 0 11px rgba(201,168,76,0.2) !important; }
+@media (max-width: 780px) {
+  .video-imersao { grid-template-columns: 1fr !important; gap: 28px !important; margin-top: 40px !important; padding: 26px 22px !important; border-radius: 2rem !important; }
+  .video-imersao .video-frame { max-width: 290px; margin: 0 auto; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .video-play:hover .video-play-dot { transform: translate(-50%, -50%) !important; }
+  .video-play-dot { transition: none !important; }
+}
+
 /* ===== As 6 Performances (#pos) =====
    As 5 colunas ficam fixas no desktop e caem em degraus; o grid-template-columns
    e inline, entao as regras responsivas precisam de !important. */
@@ -758,6 +775,28 @@ html.js-anim [data-hero] > * { opacity: 0; }
         <div><a href="https://wa.me/5531953470775?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20a%20Imers%C3%A3o%20Neurocomportamental." target="_blank" rel="noopener" style="display: inline-block; padding: 12px 26px; border: 1.5px solid #C9A84C; color: #C9A84C; font-size: 14.5px; font-weight: 700; border-radius: 999px; transition: all .3s cubic-bezier(0.25,0.46,0.45,0.94);" style-hover="transform: scale(1.03) translateY(-1px); background: #C9A84C; color: #14090B;">Saber mais</a></div>
       </div>
     </div>
+    <div class="video-imersao" data-reveal="fadeUp" style="margin-top: 56px; display: grid; grid-template-columns: minmax(0, 296px) minmax(0, 1fr); gap: 42px; align-items: center; background: rgba(250,248,245,0.04); border: 1px solid rgba(201,168,76,0.28); border-radius: 2.5rem; padding: 34px 38px;">
+      <div class="video-frame" style="position: relative; aspect-ratio: 9 / 16; border-radius: 2rem; overflow: hidden; background: #14090B; border: 1px solid rgba(201,168,76,0.22);">
+        <video id="video-imersao" src="uploads/imersao-video.mp4" poster="uploads/imersao-video-poster.webp" preload="none" controls="{{ videoOn }}" playsinline="true" aria-label="Vídeo de uma turma presencial da Imersão SariDoctors" style="width: 100%; height: 100%; object-fit: cover; display: block; background: #14090B;"></video>
+        <sc-if value="{{ !videoOn }}" hint-placeholder-val="{{ true }}">
+          <button type="button" class="video-play" onClick="{{ playVideo }}" aria-label="Reproduzir o vídeo da imersão" style="position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: none; cursor: pointer; background: linear-gradient(to bottom, rgba(20,9,11,0.25) 0%, rgba(20,9,11,0.05) 42%, rgba(20,9,11,0.7) 100%);">
+            <span class="video-play-dot" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 66px; height: 66px; border-radius: 50%; background: #C9A84C; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 44px rgba(20,9,11,0.55), 0 0 0 10px rgba(201,168,76,0.14); transition: all .3s cubic-bezier(0.25,0.46,0.45,0.94);">
+              <span style="display: block; width: 0; height: 0; margin-left: 4px; border-left: 15px solid #14090B; border-top: 9.5px solid transparent; border-bottom: 9.5px solid transparent;"></span>
+            </span>
+            <span style="position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250,248,245,0.85);">Assistir · 37s</span>
+          </button>
+        </sc-if>
+      </div>
+      <div>
+        <p style="margin: 0 0 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C;">/ Por dentro da sala</p>
+        <h3 style="margin: 0; font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 30px); font-weight: 600; line-height: 1.25; color: #FAF8F5;">O que uma foto não mostra</h3>
+        <p style="margin: 16px 0 0; font-size: 15.5px; line-height: 1.7; color: rgba(250,248,245,0.7); text-wrap: pretty;">Auditório cheio, caderno aberto e discussão de caso que não para no intervalo. É a parte que nenhuma grade de conteúdo consegue descrever: médicos de estados diferentes sentados na mesma fileira, trocando conduta, contato e o paciente que ninguém tinha resolvido. Quando a turma se despede, a rede já está formada &mdash; e continua rendendo no consultório de cada um.</p>
+        <div style="margin-top: 22px; display: flex; align-items: center; gap: 10px;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #C9A84C; flex-shrink: 0;"></span>
+          <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; letter-spacing: 0.05em; color: rgba(250,248,245,0.5);">Registro de uma turma presencial &middot; Alphaville, São Paulo</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1026,7 +1065,7 @@ function createAnimPresets(anime) {
 }
 
 class Component extends DCLogic {
-  state = { openPos: null, openMet: null, cicloAtivo: 0 };
+  state = { openPos: null, openMet: null, cicloAtivo: 0, videoOn: false };
   componentDidMount() {
     this._initCiclo();
     this._navPill = document.querySelector('.nav-pill');
@@ -1494,7 +1533,15 @@ class Component extends DCLogic {
       };
     });
     const cicloAtivo = CICLO_MODULOS[atv];
-    return { faqPos: mk(faqPosData, 'openPos'), faqMet: mk(faqMetData, 'openMet'), entregas, ciclo, cicloAtivo };
+    // Vídeo da imersão: o botão dourado some no primeiro clique e o play
+    // roda depois do re-render, já com o <video> montado.
+    const playVideo = () => this.setState({ videoOn: true }, () => {
+      const v = document.getElementById('video-imersao');
+      if (!v) return;
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    });
+    return { faqPos: mk(faqPosData, 'openPos'), faqMet: mk(faqMetData, 'openMet'), entregas, ciclo, cicloAtivo, videoOn: this.state.videoOn, playVideo };
   }
 }
 </script>
