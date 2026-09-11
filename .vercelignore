@@ -1,0 +1,6 @@
+*.pdf
+.env*
+.vercel
+README.md
+.gitignore
+.vercelignore
