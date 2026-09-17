@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /blog/previa/
 
 Sitemap: https://drasarina.com.br/sitemap.xml
+Sitemap: https://drasarina.com.br/blog/sitemap.xml
