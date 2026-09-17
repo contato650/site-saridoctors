@@ -22,3 +22,12 @@ localizada, prefira fazer push do repositório original por cima deste.
 - `uploads/` — imagens (fotos, logos)
 
 Site 100% estático: basta servir a pasta (ex.: `vercel deploy` ou GitHub Pages).
+
+## Blog em /blog (17/09/2026)
+
+`vercel.json` reescreve `/blog`, `/blog/*`, `/_next/*` e `/brand/*` para o
+projeto do blog (`blog-sarina`, repo `contato650/Blog-sarina`), então
+drasarina.com.br/blog é o blog da Dra. Sarina sem trocar de domínio. O
+`robots.txt` aponta o sitemap do blog e bloqueia `/blog/previa/` (prévias
+internas do CRM). Menu e rodapé ligam ao blog, à SariDoctors
+(saridoctors.com.br) e à Pós (pos.saridoctors.com.br).
